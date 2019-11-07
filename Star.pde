@@ -35,5 +35,7 @@ class Star {
         stroke(255);
         strokeWeight(1);
         line(px, py, sx, sy);
+
     }
+
 }

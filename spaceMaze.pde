@@ -1,10 +1,20 @@
-//SpaceMaze
+/* spaceMaze */
+import ddf.minim.*;    //audio
+import damkjer.ocd.*;  //camera
+import shapes3d.*;     //3d
+
+// audio
+Minim minim;
+AudioPlayer bgm;
+float volume = 0;
+
+// camera
+Camera camera;
 
 Star[] stars = new Star[800];
 float speed; //star speed
 
 PImage titleImg, astronautImg;
-
 
 int page = 0; //0 = main page
               //1 = game page
@@ -28,10 +38,16 @@ void setup() {
         stars[i] = new Star();
     }
 
-  // loadImage
+  // load Image
   titleImg = loadImage("spaceMaze.png");
   astronautImg = loadImage("astronaut.png");
-
+  
+  // load Music
+  minim = new Minim(this);
+  bgm = minim.loadFile("Interstellar.mp3");
+  bgm.loop();
+  bgm.setGain(volume); 
+  
 
   // Button
   startBtn = new Button(width/2+420, height/2+120, 160, 60, "START", 70);
@@ -53,6 +69,7 @@ void draw() {
   
   // gamePage
   else if (page == 1) {
+    bgm.pause();
     gamePage();
   }
   
