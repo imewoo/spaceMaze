@@ -2,12 +2,14 @@ class Star {
     float x;
     float y;
     float z;
+    float w;
     float pz;
 
     Star() {
         x = random(-width/2, width/2);
         y = random(-height/2, height/2);
         z = random(width/2);
+        w = random(-100,500);
         pz = z;
     }
 
@@ -17,25 +19,43 @@ class Star {
             z = width/2;
             x = random(-width/2, width/2);
             y = random(-height/2, height/2);
+            w = random(-500,100);
             pz = z;
         }
     }
 
     void show() {
         fill(255);
-        noStroke();
+        //noStroke();
         float sx = map(x / z, 0, 1, 0, width/2);
         float sy = map(y / z, 0, 1 , 0 , height/2);
+        float sw = map(w/z,0,1,0,500);
         float r = map(z, 0, width/2, 5, 0);
-        ellipse(sx, sy, r, r);
+        //ellipse(sx, sy, r, r);
+        //noStroke();
+        pushMatrix();
+          //translate(sx, sy, 100);
+          ellipse(sx, sy, r, r);
+          //lights();
+          //noStroke();
+          translate(sx, sy, sw);
+          //sphere(r);
+        popMatrix();
         
         float px = map(x / pz, 0, 1, 0, width/2);
         float py = map(y / pz, 0, 1, 0, height/2);
+        float pw = map(w/pz,0,1,0,500);
         pz = z;
         stroke(255);
         strokeWeight(1);
-        line(px, py, sx, sy);
-
+        //line(px, py, sx, sy);
+        pushMatrix();
+          //translate(mouseX, mouseY, 0);
+          translate(px, py, pw); 
+          //rotateY(0.5);
+          //noFill();
+          line(px, py, sx, sy);
+        popMatrix();
     }
 
 }

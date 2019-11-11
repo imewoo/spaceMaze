@@ -8,12 +8,15 @@ Minim minim;
 AudioPlayer bgm;
 float volume = 0;
 
-// camera
-Camera camera;
+// camera1: gamePage, camera2: mainPage
+Camera camera, camera2; 
+final float CASE_SIZE = 10;  // size of one case
+final float CAMERA_Y = -5;   // camera permanent attitude
 
 Star[] stars = new Star[800];
 float speed; //star speed
 
+// image
 PImage titleImg, astronautImg;
 
 int page = 0; //0 = main page
@@ -48,6 +51,15 @@ void setup() {
   bgm.loop();
   bgm.setGain(volume); 
   
+  // setup camera
+  camera = new Camera(this, 30, CAMERA_Y, 30);
+  // coordinate for the camera position
+  // coordinate for the center of interest
+  // component of the "up" direction vector
+  camera2 = new Camera(this, width/2,height/2,900,width/2,height/2,0,0,0,0);
+  
+
+
 
   // Button
   startBtn = new Button(width/2+420, height/2+120, 160, 60, "START", 70);
@@ -64,6 +76,7 @@ void draw() {
   
   // mainPage
   if (page == 0) {
+    camera2.feed();
     mainPage();
   }
   
