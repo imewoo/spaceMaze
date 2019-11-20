@@ -18,6 +18,13 @@ float speed; //star speed
 
 // image
 PImage titleImg, astronautImg;
+/* Textures */
+PImage WALL_TEXTURE;
+PImage GROUND_TEXTURE;
+PImage WATER_TEXTURE;
+PImage TREE_TEXTURE;
+
+char[][] map;  // loaded map
 
 int page = 0; //0 = main page
               //1 = game page
@@ -57,8 +64,25 @@ void setup() {
   // coordinate for the center of interest
   // component of the "up" direction vector
   camera2 = new Camera(this, width/2,height/2,900,width/2,height/2,0,0,0,0);
+    
+    
+    /* Load map from file */
+  final String[] lines = loadStrings("default.map");
   
-
+  map = new char[lines.length][lines[0].length()];
+  
+  for (int row = 0; row < lines.length; row++) {
+    for (int col = 0; col < lines[row].length(); col++) {
+      map[row][col] = lines[row].charAt(col);
+    }
+  }
+  
+ /* Load textures */
+  WALL_TEXTURE = loadImage("brick-wall-texture.png");
+  //GROUND_TEXTURE = loadImage("grass-texture.png");
+  WATER_TEXTURE = loadImage("water-texture.jpg");
+  TREE_TEXTURE = loadImage("tree-texture.jpg");
+  textureMode(NORMAL);
 
 
   // Button
