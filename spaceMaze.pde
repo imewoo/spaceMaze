@@ -1,3 +1,4 @@
+
 /* spaceMaze */
 import ddf.minim.*;    //audio
 import damkjer.ocd.*;  //camera
@@ -10,8 +11,11 @@ float volume = 0;
 
 // camera1: gamePage, camera2: mainPage
 Camera camera, camera2; 
-final float CASE_SIZE = 10;  // size of one case
+final float CASE_SIZE = 10;  // size of one case 
 final float CAMERA_Y = -5;   // camera permanent attitude
+final float CAMERA_Z = 5;
+
+
 
 Star[] stars = new Star[800];
 float speed; //star speed
@@ -20,11 +24,13 @@ float speed; //star speed
 PImage titleImg, astronautImg;
 /* Textures */
 PImage WALL_TEXTURE;
+PImage ENEMY_TEXTURE;
+PImage ITEM_TEXTURE;
 PImage GROUND_TEXTURE;
 PImage WATER_TEXTURE;
 PImage TREE_TEXTURE;
 
-char[][] map;  // loaded map
+char[][] map;  // loaded map /***** map = 150 x 140 *******/
 
 int page = 0; //0 = main page
               //1 = game page
@@ -58,12 +64,12 @@ void setup() {
   bgm.loop();
   bgm.setGain(volume); 
   
-  // setup camera
-  camera = new Camera(this, 30, CAMERA_Y, 30);
+  // setup camera // camera(eye, center, n)
+  camera = new Camera(this, 30, 6*CAMERA_Y, 30); //30, -5, 30 //sub camera
   // coordinate for the camera position
   // coordinate for the center of interest
   // component of the "up" direction vector
-  camera2 = new Camera(this, width/2,height/2,900,width/2,height/2,0,0,0,0);
+  camera2 = new Camera(this, width/2,height/2,900,width/2,height/2,0,0,0,0); //main camera
     
     
     /* Load map from file */
@@ -78,7 +84,9 @@ void setup() {
   }
   
  /* Load textures */
-  WALL_TEXTURE = loadImage("brick-wall-texture.png");
+  WALL_TEXTURE = loadImage("wall.png");
+  ENEMY_TEXTURE = loadImage("wall-texture.jpg");
+  ITEM_TEXTURE = loadImage("astronaut.png");
   //GROUND_TEXTURE = loadImage("grass-texture.png");
   WATER_TEXTURE = loadImage("water-texture.jpg");
   TREE_TEXTURE = loadImage("tree-texture.jpg");
