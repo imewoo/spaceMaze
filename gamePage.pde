@@ -1,3 +1,4 @@
+// page = 1
 int timeCount=0; //time count
 int die_timeCount=0; //if game end, timecount remain
 
@@ -100,8 +101,99 @@ void gamePage() {
       
       popMatrix();
     }
+    
+    
+  // draw timerBox
+  pushMatrix();
+    timerBox1.draw();
+  popMatrix();
+  pushMatrix();
+    timerBox2.draw();
+  popMatrix();
+  pushMatrix();
+    timerBox3.draw();
+  popMatrix();
+  pushMatrix();
+    timerBox4.draw();
+  popMatrix();
+  pushMatrix();
+    timerBox5.draw();
+  popMatrix();
+  pushMatrix();
+    timerBox6.draw();
+  popMatrix();
   
-  //timedraw();
+  // draw timer
+  pushMatrix();
+    timer1.draw();
+  popMatrix();
+  pushMatrix();
+    timer2.draw();
+  popMatrix();
+  pushMatrix();
+    timer3.draw();
+  popMatrix();
+  pushMatrix();
+    timer4.draw();
+  popMatrix();
+  pushMatrix();
+    timer5.draw();
+  popMatrix();
+  pushMatrix();
+    timer6.draw();
+  popMatrix();
+
+  //pushMatrix();
+  //  fill(0,0,255);
+  //  translate(50, -70, 50);
+  //  rotateX(PI/2);
+  //  rotateY(0);
+  //  rotateZ(0);
+  //  rect(0,0,30,30);
+  //popMatrix();
+  //pushMatrix();
+  //  fill(0,0,255);
+  //  translate(50, -40, 50);
+  //  rotateX(PI/2);
+  //  rotateY(0);
+  //  rotateZ(0);
+  //  rect(0,0,30,30);
+  //popMatrix();
+  
+  //pushMatrix();
+  //  fill(0,255,0);
+  //  translate(80, -70, 80);
+  //  rotateY(PI/2);
+  //  rect(0,0,30,30);
+  //popMatrix();
+  //pushMatrix();
+  //  fill(0,255,0);
+  //  translate(50, -70, 80);
+  //  rotateY(PI/2);
+  //  rect(0,0,30,30);
+  //popMatrix();
+  
+  //pushMatrix();
+  //  fill(255, 0, 0);
+  //  translate(80, -70, 80);
+  //  rotateZ(PI/2);
+  //  rect(0,0,30,30);
+  //popMatrix();  
+  //pushMatrix();
+  //  fill(255, 0, 0);
+  //  translate(80, -70, 50);
+  //  rotateZ(PI/2);
+  //  rect(0,0,30,30);
+  //popMatrix();  
+  
+  ////startAlarm
+  //int m = minute();
+  //int s = second();
+  //int time = m+s;
+  //if(time == countDown+timer){
+  //  page = 0;
+  //}
+
   
 }
 

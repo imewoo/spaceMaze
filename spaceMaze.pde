@@ -1,4 +1,3 @@
-
 /* spaceMaze */
 import ddf.minim.*;    //audio
 import damkjer.ocd.*;  //camera
@@ -9,13 +8,11 @@ Minim minim;
 AudioPlayer bgm;
 float volume = 0;
 
-// camera1: gamePage, camera2: mainPage
+// camera: gamePage, camera2: mainPage
 Camera camera, camera2; 
 final float CASE_SIZE = 10;  // size of one case 
 final float CAMERA_Y = -5;   // camera permanent attitude
 final float CAMERA_Z = 5;
-
-
 
 Star[] stars = new Star[800];
 float speed; //star speed
@@ -36,6 +33,17 @@ int page = 0; //0 = main page
               //1 = game page
               //2 = setting page
               //3 = how to use page(guide button)
+              //4 = gameOver page
+              
+//int timer = 3600;
+int timer = 300;
+//int timeron = 0;
+//int maxtimer = 3600;
+int min = minute();
+int sec = second();
+int mm = min*3600;
+int ss = sec*60;
+int countDown = mm+ss;
 
 Button startBtn;
 Button settingBtn;
@@ -45,6 +53,19 @@ Button startGameBtn;
 Button settingBtnIcon;
 Button guideBtnIcon;
 
+timerBox timerBox1;
+timerBox timerBox2;
+timerBox timerBox3;
+timerBox timerBox4;
+timerBox timerBox5;
+timerBox timerBox6;
+
+timer timer1;
+timer timer2;
+timer timer3;
+timer timer4;
+timer timer5;
+timer timer6;
 
 void setup() {
   fullScreen(P3D);
@@ -92,7 +113,6 @@ void setup() {
   TREE_TEXTURE = loadImage("tree-texture.jpg");
   textureMode(NORMAL);
 
-
   // Button
   startBtn = new Button(width/2+420, height/2+120, 160, 60, "START", 70);
   settingBtn = new Button(width/2+420, height/2+245, 160, 40, "Setting", 45);
@@ -101,10 +121,29 @@ void setup() {
   startGameBtn = new Button(width-380, height/2+400, 130, 40, "Game Start", 40);
   settingBtnIcon = new Button(300, 250, 130, 45, "Setting", 45);
   guideBtnIcon = new Button(300, 250, 130, 45, "How To Use", 40);  
+  
+  // timer
+  timerBox1 = new timerBox(50,-70,50,PI/2,0,0);
+  timerBox2 = new timerBox(50,-40,50,PI/2,0,0);
+  timerBox3 = new timerBox(80,-70,80,0,PI/2,0);
+  timerBox4 = new timerBox(50,-70,80,0,PI/2,0);
+  timerBox5 = new timerBox(80,-70,80,0,0,PI/2);
+  timerBox6 = new timerBox(80,-70,50,0,0,PI/2);
+  
+  timer1 = new timer(50,-70,50,PI/2,0,0);
+  timer2 = new timer(50,-39,50,PI/2,0,0);
+  timer3 = new timer(81,-70,80,0,PI/2,0);
+  timer4 = new timer(49,-70,80,0,PI/2,0);
+  timer5 = new timer(80,-70,81,0,0,PI/2);
+  timer6 = new timer(80,-70,49,0,0,PI/2);
 }
 
 
 void draw() {
+    //startAlarm
+  int m = minute()*60;
+  int s = second()*3600;
+  int time = m + s;
   
   // mainPage
   if (page == 0) {

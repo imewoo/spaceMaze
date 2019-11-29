@@ -1,3 +1,4 @@
+// page = 2
 void settingPage() { 
   background(0);
   

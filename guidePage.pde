@@ -1,3 +1,4 @@
+// page = 3
 void guidePage() {
   background(0);
   

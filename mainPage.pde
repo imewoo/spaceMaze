@@ -1,3 +1,4 @@
+// page = 0
 void mainPage() {
   background(0);
   
@@ -13,7 +14,7 @@ void mainPage() {
   // button click
   if (mousePressed) {
     if (startBtn.click) {
-    page = 1;
+      page = 1;
     }
     else if (settingBtn.click) {
       page = 2;
@@ -30,6 +31,6 @@ void mainPage() {
   for (int i = 0; i < stars.length; i++) {
       stars[i].update();
       stars[i].show();
-  }
+  }  
   
 }
