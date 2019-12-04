@@ -34,6 +34,7 @@ int page = 0; //0 = main page
               //2 = setting page
               //3 = how to use page(guide button)
               //4 = gameOver page
+              //5 = selectGame page
               
 //int timer = 3600;
 int timer = 36000;
@@ -45,13 +46,16 @@ int mm = min*3600;
 int ss = sec*60;
 int countDown = mm+ss;
 
-int count=5; //initialize count = 5;
+int count=2; //initialize count = 5;
 int a=1; //initialize item size ratio
 int b=1;
 
 
 boolean flag = true;
-  
+boolean flag2 = true;
+
+boolean selectflag=false;
+
 Button startBtn;
 Button settingBtn;
 Button guideBtn;
@@ -121,9 +125,13 @@ void setup() {
   textureMode(NORMAL);
 
   // Button
-  startBtn = new Button(width/2+420, height/2+120, 160, 60, "START", 70);
-  settingBtn = new Button(width/2+420, height/2+245, 160, 40, "Setting", 45);
-  guideBtn = new Button(width/2+420, height/2+350, 160, 40, "How To Use", 40);
+  //startBtn = new Button(width/2+420, height/2+120, 160, 60, "START", 70); //original
+  //settingBtn = new Button(width/2+420, height/2+245, 160, 40, "Setting", 45); //original
+  //guideBtn = new Button(width/2+420, height/2+350, 160, 40, "How To Use", 40); //original
+  startBtn = new Button(width/2+400, height/2+120, 160, 60, "START", 70);
+  settingBtn = new Button(width/2+400, height/2+245, 160, 40, "Setting", 45);
+  guideBtn = new Button(width/2+400, height/2+350, 160, 40, "How To Use", 40);
+  
   homeBtn = new Button(width-380, height/2+300, 130, 40, "Home", 45);
   startGameBtn = new Button(width-380, height/2+400, 130, 40, "Game Start", 40);
   settingBtnIcon = new Button(300, 250, 130, 45, "Setting", 45);
@@ -173,6 +181,11 @@ void draw() {
   else if (page == 3) {
     guidePage();
   }
-    
+  
+  // selectGamePage (someone who win the game has the choice whether go on or not)
+  else if (page == 5){
+    selectGame();
+    //camera2.feed();
+  }
   
 }

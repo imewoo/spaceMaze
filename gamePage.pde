@@ -40,13 +40,22 @@ void gamePage() {
       camera.jump(position[0], CAMERA_Y, position[2]);  // reset previous position
     }
     
+    /*
     if(isItem(camera)){ //eat item = count--;
       drawItemCheck();
       count--; //initialized count = 5
-    }
+    }*/
     
-    if(count==0 && isEnd(camera)){ //count == 0 & approach to 'S'
-      mainPage();
+    //This code will be completed after ending ItemCheck function.
+    //count == 0 & approach to 'S'
+    //In this case, 'S' is the end point.
+    if(count==0 && isEnd(camera)){ 
+      selectflag=true;
+      //bgm.pause();
+      //camera2.feed();
+      //mainPage();
+      gamePass(); //this function is in the "keyPressed.class"
+     
     }
     
     println(count);
@@ -83,11 +92,13 @@ void gamePage() {
             drawItem2();
             break;
           case '%':
-            drawEnemy();
+            //drawEnemy();
             break;
           case '&':
             drawTime();
             break;
+          case 'S':
+            drawEndPoint();
           default:
             drawGround();
         }
@@ -279,6 +290,17 @@ void drawWater() {
   noFill();
 }
 
+void drawEndPoint() {
+  beginShape(QUADS);
+  texture(GROUND_TEXTURE);
+  vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
+  vertex(CASE_SIZE, 0, 0, 1, 0);
+  vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
+  vertex(0, 0, CASE_SIZE, 0, 1);
+  endShape();
+  noFill();
+}
+
 /**
  * Draws sphere in current case.
  */
@@ -290,7 +312,7 @@ void drawSphere() {
 }
 
 
-
+/*
 void drawEnemy(){
   final Ellipsoid enemy = new Ellipsoid(this, 20, 30);
   enemy.setTexture(ENEMY_TEXTURE);
@@ -318,15 +340,16 @@ void drawEnemy(){
   
   noFill();
 }
-
+*/
 
 void drawItem(){
   
-  if(isItem(camera) && flag){ //eat item = count--;
+  if(isItem(camera) && flag && mousePressed){ //eat item = count--;
       drawItemCheck();
       a=a/2;
       count--; //initialized count = 5
       flag =false;
+      println(flag);
     }
     
     else{
@@ -338,7 +361,8 @@ void drawItem(){
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
       rotateY(angle);
-      item.draw();
+      
+    boolean flag2=true;item.draw();
       //for game optimization
       if(angle < 6){
         angle++;
@@ -360,10 +384,9 @@ void drawItem(){
     }
 }
 
-
 void drawItem2(){
-    boolean flag2=true;
-    if(isItem2(camera) && flag2){ //eat item = count--;
+
+    if(isItem2(camera) && flag2 && mousePressed){ //eat item = count--;
       drawItemCheck();
       b=b/2;
       count--; //initialized count = 5
@@ -444,13 +467,22 @@ void onStepBackward(final Camera camera) {
  *
  * @return true - camera is in allowed map case, false - not.
  */
-boolean isAllowedCase(final Camera camera) { //if blank, 'S', 'F', '@', allowed to go!
+boolean isAllowedCase(final Camera camera) { //if blank, 'S', 'F', '@', '^' allowed to go!
   final char caseContent = caseContent(camera);
+  //if user does not eat the item, end gate does not open
+  if(count==0){
   return caseContent == ' '
          || caseContent == 'S'
          || caseContent == 'F'  
          || caseContent == '@'
-         || caseContent == '^'; 
+         || caseContent == '^';
+  }
+  else{
+  return caseContent == ' '
+         || caseContent == 'F'  
+         || caseContent == '@'
+         || caseContent == '^';
+  }
 }
 
 boolean isItem(final Camera camera){ //when camera catch the item.
@@ -475,8 +507,8 @@ boolean isEnd(final Camera camera){ //when camera approach to end point(S).
  * @return character of content of the current case of the map
  */
 char caseContent(final Camera camera) {
-  final int[] caseIds = currentCase(camera);
-  return map[caseIds[0]][caseIds[1]];
+  final int[] caseId= currentCase(camera);
+  return map[caseId[0]][caseId[1]];
 }
 
 /**
@@ -493,3 +525,14 @@ int[] currentCase(final Camera camera) {
     (int) (position[2] / CASE_SIZE),
     (int) (position[0] / CASE_SIZE) };
 }
+
+/*
+void mousePressed() {
+  noLoop();
+  count--;
+}
+
+void mouseReleased() {
+  loop();
+}
+*/

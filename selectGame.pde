@@ -1,31 +1,32 @@
-// page = 3
-void guidePage() {
-  background(0);
-  
+// page = 5
+void selectGame() { 
+   background(0);
+
   // title
   image(titleImg, width/2-500, -50, 1000, 400);
   
   noStroke();
   fill(255,255,255,150);
   rect(200, 250, width-400, height-300, 40);
+
   
   // button
   stroke(255);
-  guideBtnIcon.draw();
+  settingBtnIcon.draw();
   homeBtn.draw();
   startGameBtn.draw();
   
-  boolean flag300 = true;
-  boolean flag301 = true;
+  boolean flag200 = true;
+  boolean flag201 = true;
   // button click
   if (mousePressed) {
-    if (homeBtn.click && flag300) {
+    if (homeBtn.click && flag200) {
     page = 0;
-    flag300 = false;
+    flag200 = false;
     }
-    else if (startGameBtn.click && flag301) {
+    else if (startGameBtn.click && flag201) {
       page = 1;
-      flag301 = true;
+      flag201 = false;
     }
   }
   

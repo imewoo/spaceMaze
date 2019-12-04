@@ -6,3 +6,12 @@ void keyPressed() {
     bgm.loop();
   }
 }
+
+void gamePass(){
+  // win the game
+  // select page open (next stage  /  main page)
+  if(selectflag){
+    page = 3;
+    bgm.loop();
+  }
+}
