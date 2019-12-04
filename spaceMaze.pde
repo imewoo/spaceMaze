@@ -36,7 +36,7 @@ int page = 0; //0 = main page
               //4 = gameOver page
               
 //int timer = 3600;
-int timer = 300;
+int timer = 36000;
 //int timeron = 0;
 //int maxtimer = 3600;
 int min = minute();
@@ -45,6 +45,13 @@ int mm = min*3600;
 int ss = sec*60;
 int countDown = mm+ss;
 
+int count=5; //initialize count = 5;
+int a=1; //initialize item size ratio
+int b=1;
+
+
+boolean flag = true;
+  
 Button startBtn;
 Button settingBtn;
 Button guideBtn;
@@ -67,7 +74,7 @@ timer timer4;
 timer timer5;
 timer timer6;
 
-void setup() {
+void setup() {  
   fullScreen(P3D);
   
   // Star
@@ -90,7 +97,7 @@ void setup() {
   // coordinate for the camera position
   // coordinate for the center of interest
   // component of the "up" direction vector
-  camera2 = new Camera(this, width/2,height/2,900,width/2,height/2,0,0,0,0); //main camera
+  camera2 = new Camera(this, width/2,height/2,900  ,width/2,height/2,0    ,0,0,0); //main camera //(eye, center, upVector)
     
     
     /* Load map from file */
@@ -108,7 +115,7 @@ void setup() {
   WALL_TEXTURE = loadImage("wall.png");
   ENEMY_TEXTURE = loadImage("wall-texture.jpg");
   ITEM_TEXTURE = loadImage("astronaut.png");
-  //GROUND_TEXTURE = loadImage("grass-texture.png");
+  GROUND_TEXTURE = loadImage("grass-texture.png");
   WATER_TEXTURE = loadImage("water-texture.jpg");
   TREE_TEXTURE = loadImage("tree-texture.jpg");
   textureMode(NORMAL);

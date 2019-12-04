@@ -10,25 +10,7 @@ float angle = 0;
 float aVelocity = 0;
 float aAcceleration = 0.001;
 
-/*
-void timedraw(){
-    //////time//////
-  if((frameCount%(frameConstant/3))==0 && game_end_confirm==0)
-    timeCount++;
-    
-  fill(255,255,255);
-  textSize(100);
-  textAlign(CENTER);
-  
-  if(game_end_confirm==0) //show time count
-    text(timeCount,450,130);
-  else                 //show die time count
-    text(die_timeCount,450,130);
-}
-*/
-
 void gamePage() {
-  
   // star
   background(0);
   speed = 2;
@@ -54,9 +36,20 @@ void gamePage() {
     }
     
     /* If we are in non allowed area (wall, tree or water) cancel the movement */
-    if (!isAllowedCase(camera)) {
+    if (!isAllowedCase(camera)) { // if not allowed to move 
       camera.jump(position[0], CAMERA_Y, position[2]);  // reset previous position
     }
+    
+    if(isItem(camera)){ //eat item = count--;
+      drawItemCheck();
+      count--; //initialized count = 5
+    }
+    
+    if(count==0 && isEnd(camera)){ //count == 0 & approach to 'S'
+      mainPage();
+    }
+    
+    println(count);
   }
   
   
@@ -78,13 +71,16 @@ void gamePage() {
             drawWall();
             break;
           case '$':
-            drawTree();
+            //drawTree();
             break;
           case '~':
-            drawWater();
+            //drawWater();
             break;
           case '@':
             drawItem();
+            break;
+          case '^':
+            drawItem2();
             break;
           case '%':
             drawEnemy();
@@ -302,44 +298,115 @@ void drawEnemy(){
   enemy.setRadius(CASE_SIZE);
 
   pushMatrix();
+  
   translate(4*CASE_SIZE / 2, -CASE_SIZE / 3, 3*CASE_SIZE / 2);
   rotateY(angle/8);
   
   translate(CASE_SIZE, -CASE_SIZE / 2, CASE_SIZE);
   enemy.draw();
   
+   //for game optimization -ing
+
+  if(angle<50){
+    angle++;
+  }else{
+    angle=0;
+  }
+  
   angle++;
   popMatrix();
   
   noFill();
-
 }
+
 
 void drawItem(){
-  final Ellipsoid item = new Ellipsoid(this, 20, 30);
-  item.setTexture(ITEM_TEXTURE);
-  item.drawMode(Shape3D.TEXTURE);
-  item.setRadius(CASE_SIZE / 4);
-
-  pushMatrix();
-  translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
-  rotateY(angle);
-  item.draw();
   
-  angle++;
-  //aVelocity = aVelocity + aAcceleration;
-  //angle = angle + aVelocity;
-  
-  /*
-  if(angle>50){
-    aVelocity *= -1;
-  }*/
-  popMatrix();
-  
-  noFill();
+  if(isItem(camera) && flag){ //eat item = count--;
+      drawItemCheck();
+      a=a/2;
+      count--; //initialized count = 5
+      flag =false;
+    }
+    
+    else{
+      final Ellipsoid item = new Ellipsoid(this, 20, 30);
+      item.setTexture(ITEM_TEXTURE);
+      item.drawMode(Shape3D.TEXTURE);
+      item.setRadius(a*CASE_SIZE / 4);
+    
+      pushMatrix();
+      translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
+      rotateY(angle);
+      item.draw();
+      //for game optimization
+      if(angle < 6){
+        angle++;
+      }else{
+        angle=0;
+      }
+      
+      angle++;
+      //aVelocity = aVelocity + aAcceleration;
+      //angle = angle + aVelocity;
+      
+      /*
+      if(angle>50){
+        aVelocity *= -1;
+      }*/
+      popMatrix();
+      
+      noFill();
+    }
 }
 
 
+void drawItem2(){
+    boolean flag2=true;
+    if(isItem2(camera) && flag2){ //eat item = count--;
+      drawItemCheck();
+      b=b/2;
+      count--; //initialized count = 5
+      flag2 = false;
+    }
+    
+    else{
+      final Ellipsoid item2 = new Ellipsoid(this, 20, 30);
+      item2.setTexture(ITEM_TEXTURE);
+      item2.drawMode(Shape3D.TEXTURE);
+      item2.setRadius(b*CASE_SIZE / 4);
+    
+      pushMatrix();
+      translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
+      rotateY(angle);
+      item2.draw();
+      
+      //for game optimization
+      if(angle < 6){
+        angle++;
+      }else{
+        angle=0;
+      }
+      
+      angle++;
+    
+      popMatrix();
+    
+      noFill();
+    }
+}
+
+
+void drawItemCheck(){
+  beginShape(QUADS);
+  texture(GROUND_TEXTURE);
+  vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
+  vertex(CASE_SIZE, 0, 0, 1, 0);
+  vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
+  vertex(0, 0, CASE_SIZE, 0, 1);
+  endShape();
+  noFill();
+}
 
 // TODO: remake it
 //6.0 -> 1 circle moved.
@@ -369,6 +436,7 @@ void onStepBackward(final Camera camera) {
   camera.jump(position[0], CAMERA_Y, position[2]);  // force attitude    //jump(locationX, locationY, locationZ)
 }
 
+
 /**
  * Checks if camera is in allowed map case.
  *
@@ -376,13 +444,29 @@ void onStepBackward(final Camera camera) {
  *
  * @return true - camera is in allowed map case, false - not.
  */
-boolean isAllowedCase(final Camera camera) {
+boolean isAllowedCase(final Camera camera) { //if blank, 'S', 'F', '@', allowed to go!
   final char caseContent = caseContent(camera);
   return caseContent == ' '
-    || caseContent == 'S'
-    || caseContent == 'F';
+         || caseContent == 'S'
+         || caseContent == 'F'  
+         || caseContent == '@'
+         || caseContent == '^'; 
 }
 
+boolean isItem(final Camera camera){ //when camera catch the item.
+  final char caseContent = caseContent(camera);
+  return caseContent == '@';
+}
+
+boolean isItem2(final Camera camera){ //when camera catch the item.
+  final char caseContent = caseContent(camera);
+  return caseContent == '^';
+}
+
+boolean isEnd(final Camera camera){ //when camera approach to end point(S).
+  final char caseContent = caseContent(camera);
+  return caseContent == 'S';
+ }
 /**
  * Returns the content of current case of the map.
  *

@@ -21,7 +21,7 @@ class timer {
     if (timer <= 0) {
       page = 0; // main page
       bgm.loop();
-      timer = 300;
+      timer = 36000;
     }
     // draw timer
     translate(x, y, z);
