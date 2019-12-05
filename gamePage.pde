@@ -51,11 +51,8 @@ void gamePage() {
     //In this case, 'S' is the end point.
     if(count==0 && isEnd(camera)){ 
       selectflag=true;
-      //bgm.pause();
-      //camera2.feed();
-      //mainPage();
-      gamePass(); //this function is in the "keyPressed.class"
-     
+     page = 5;
+     bgm.loop();
     }
     
     println(count);

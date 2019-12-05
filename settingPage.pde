@@ -16,17 +16,13 @@ void settingPage() {
   homeBtn.draw();
   startGameBtn.draw();
   
-  boolean flag200 = true;
-  boolean flag201 = true;
   // button click
   if (mousePressed) {
-    if (homeBtn.click && flag200) {
+    if (homeBtn.click) {
     page = 0;
-    flag200 = false;
     }
-    else if (startGameBtn.click && flag201) {
+    else if (startGameBtn.click) {
       page = 1;
-      flag201 = false;
     }
   }
   

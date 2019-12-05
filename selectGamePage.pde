@@ -1,5 +1,5 @@
 // page = 5
-void selectGame() { 
+void selectGamePage() { 
    background(0);
 
   // title

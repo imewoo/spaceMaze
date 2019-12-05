@@ -184,8 +184,8 @@ void draw() {
   
   // selectGamePage (someone who win the game has the choice whether go on or not)
   else if (page == 5){
-    selectGame();
-    //camera2.feed();
+    camera2.feed();
+    selectGamePage();
   }
   
 }
