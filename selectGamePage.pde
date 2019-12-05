@@ -12,21 +12,17 @@ void selectGamePage() {
   
   // button
   stroke(255);
-  settingBtnIcon.draw();
+  selectGameBtnIcon.draw();
   homeBtn.draw();
   startGameBtn.draw();
   
-  boolean flag200 = true;
-  boolean flag201 = true;
   // button click
   if (mousePressed) {
-    if (homeBtn.click && flag200) {
-    page = 0;
-    flag200 = false;
+    if (homeBtn.click) {
+      page = 0;
     }
-    else if (startGameBtn.click && flag201) {
+    else if (startGameBtn.click) {
       page = 1;
-      flag201 = false;
     }
   }
   
