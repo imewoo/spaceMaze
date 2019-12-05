@@ -63,6 +63,7 @@ Button homeBtn;
 Button startGameBtn;
 Button settingBtnIcon;
 Button guideBtnIcon;
+Button gameOverBtnIcon;
 Button selectGameBtnIcon;
 
 timerBox timerBox1;
@@ -137,6 +138,7 @@ void setup() {
   startGameBtn = new Button(width-380, height/2+400, 130, 40, "Game Start", 40);
   settingBtnIcon = new Button(300, 250, 130, 45, "Setting", 45);
   guideBtnIcon = new Button(300, 250, 130, 45, "How To Use", 40);
+  selectGameBtnIcon = new Button(300, 250, 130, 45, "Game Over", 40);
   selectGameBtnIcon = new Button(300, 250, 130, 45, "Select Game", 40);
   
   // timer
