@@ -9,7 +9,9 @@ AudioPlayer bgm;
 float volume = 0;
 
 // camera: gamePage, camera2: mainPage
-Camera camera, camera2; 
+Camera camera, camera2;
+Camera camera3, camera4;
+
 final float CASE_SIZE = 10;  // size of one case 
 final float CAMERA_Y = -5;   // camera permanent attitude
 final float CAMERA_Z = 5;
@@ -28,6 +30,7 @@ PImage WATER_TEXTURE;
 PImage TREE_TEXTURE;
 
 char[][] map;  // loaded map /***** map = 150 x 140 *******/
+char[][] map2;
 
 int page = 0; //0 = main page
               //1 = game page
@@ -58,6 +61,7 @@ boolean selectflag=false;
 
 Button startBtn;
 Button settingBtn;
+Button exitBtn;
 Button guideBtn;
 Button homeBtn;
 Button startGameBtn;
@@ -65,6 +69,7 @@ Button settingBtnIcon;
 Button guideBtnIcon;
 Button gameOverBtnIcon;
 Button selectGameBtnIcon;
+Button nextStageIcon;
 
 timerBox timerBox1;
 timerBox timerBox2;
@@ -106,7 +111,13 @@ void setup() {
   camera2 = new Camera(this, width/2,height/2,900  ,width/2,height/2,0    ,0,0,0); //main camera //(eye, center, upVector)
     
     
-    /* Load map from file */
+  camera3 = new Camera(this, 30, 6*CAMERA_Y, 30); //30, -5, 30 //sub camera
+  // coordinate for the camera position
+  // coordinate for the center of interest
+  // component of the "up" direction vector
+  camera4 = new Camera(this, width/2,height/2,900  ,width/2,height/2,0    ,0,0,0); //main camera //(eye, center, upVector)  
+    
+ /************** Load map 1-stage from file *************/
   final String[] lines = loadStrings("default.map");
   
   map = new char[lines.length][lines[0].length()];
@@ -116,7 +127,20 @@ void setup() {
       map[row][col] = lines[row].charAt(col);
     }
   }
+ /*******************************************************/
+ 
+ /************** Load map 2-stage from file *************/
+  final String[] lines2 = loadStrings("default2.map");
   
+  map2 = new char[lines2.length][lines2[0].length()];
+  
+  for (int row2 = 0; row2 < lines2.length; row2++) {
+    for (int col2 = 0; col2 < lines2[row2].length(); col2++) {
+      map2[row2][col2] = lines2[row2].charAt(col2);
+    }
+  }
+ /*******************************************************/
+ 
  /* Load textures */
   WALL_TEXTURE = loadImage("wall.png");
   ENEMY_TEXTURE = loadImage("wall-texture.jpg");
@@ -135,11 +159,13 @@ void setup() {
   guideBtn = new Button(width/2+400, height/2+350, 160, 40, "How To Use", 40);
   
   homeBtn = new Button(width-380, height/2+300, 130, 40, "Home", 45);
+  exitBtn = new Button(width-380, height/2+300, 130, 40, "Exit", 45);
   startGameBtn = new Button(width-380, height/2+400, 130, 40, "Game Start", 40);
   settingBtnIcon = new Button(300, 250, 130, 45, "Setting", 45);
   guideBtnIcon = new Button(300, 250, 130, 45, "How To Use", 40);
   selectGameBtnIcon = new Button(300, 250, 130, 45, "Game Over", 40);
   selectGameBtnIcon = new Button(300, 250, 130, 45, "Select Game", 40);
+  nextStageIcon = new Button(width-380, height/2+200, 130, 40, "Next Stage", 40);
   
   // timer
   timerBox1 = new timerBox(50,-70,50,PI/2,0,0);
@@ -190,6 +216,11 @@ void draw() {
   else if (page == 5){
     camera2.feed();
     selectGamePage();
+  }
+  else if (page == 6){
+    camera4.feed();
+    bgm.pause();
+    gamePage2();
   }
   
 }

@@ -1,16 +1,16 @@
 // page = 1
-int timeCount=0; //time count
-int die_timeCount=0; //if game end, timecount remain
+int timeCount2=0; //time count
+int die_timeCount2=0; //if game end, timeCount2 remain
 
-int frameConstant=300; //initialize fps
-int game_end_confirm=1; //set end
-float delta = 0.0f ;
+int frameConstant2=300; //initialize fps
+int game_end_confirm2=1; //set end
+float delta2 = 0.0f ;
 
-float angle = 0;
-float aVelocity = 0;
-float aAcceleration = 0.001;
+float angle2 = 0;
+float aVelocity2 = 0;
+float aAcceleration2 = 0.001;
 
-void gamePage() {
+void gamePage2() {
   // star
   background(0);
   speed = 2;
@@ -24,32 +24,32 @@ void gamePage() {
   
   /* Navigate camera */
   if (keyPressed && key == CODED) {
-    final float[] position = camera.position();
+    final float[] position = camera3.position();
     
     switch (keyCode) {
       case UP:
-        onStepForward(camera);
+        onStepForward2(camera3);
         break;
       case DOWN:
-        onStepBackward(camera);
+        onStepBackward2(camera3);
         break;
     }
     
     /* If we are in non allowed area (wall, tree or water) cancel the movement */
-    if (!isAllowedCase(camera)) { // if not allowed to move 
-      camera.jump(position[0], CAMERA_Y, position[2]);  // reset previous position
+    if (!isAllowedCase2(camera3)) { // if not allowed to move 
+      camera3.jump(position[0], CAMERA_Y, position[2]);  // reset previous position
     }
     
     /*
-    if(isItem(camera)){ //eat item = count--;
-      drawItemCheck();
+    if(isItem2_1(camera)){ //eat item = count--;
+      drawItem2_1Check();
       count--; //initialized count = 5
     }*/
     
     //This code will be completed after ending ItemCheck function.
     //count == 0 & approach to 'S'
     //In this case, 'S' is the end point.
-    if(count==0 && isEnd(camera)){ 
+    if(count==0 && isEnd2(camera3)){ 
       selectflag=true;
      page = 5;
      bgm.loop();
@@ -60,49 +60,44 @@ void gamePage() {
   
   
   /* Pose camera */ 
-  camera.feed();
+  camera3.feed();
     
     
   /* Draw map */
-    for (int row = 0; row < map.length; row++) {
+    for (int row = 0; row < map2.length; row++) {
       pushMatrix();
       translate(0, 0, row * CASE_SIZE);
       
-      for (int col = 0; col < map[row].length; col++) {
+      for (int col = 0; col < map2[row].length; col++) {
         pushMatrix();
         translate(col * CASE_SIZE, 0, 0);
         
-        switch (map[row][col]) {
+        switch (map2[row][col]) {
           case '#':
-            drawWall();
+            drawWall2();
             break;
           case '$':
-            //drawTree();
+            //drawTree2();
             break;
           case '~':
-            //drawWater();
+            //drawWater2();
             break;
           case '@':
-            drawItem();
+            drawItem2_1();
             break;
           case '^':
-            drawItem2();
+            drawItem2_2();
             break;
           case '%':
             //drawEnemy();
             break;
           case '&':
-            drawTime();
+            drawTime2();
             break;
           case 'S':
-            drawEndPoint();
-            break;
-          case 'G':
-            drawGround();
-            break;
+            drawEndPoint2();
           default:
-            
-            break;
+            drawGround2();
         }
   
         popMatrix();
@@ -151,63 +146,11 @@ void gamePage() {
   pushMatrix();
     timer6.draw();
   popMatrix();
-
-  //pushMatrix();
-  //  fill(0,0,255);
-  //  translate(50, -70, 50);
-  //  rotateX(PI/2);
-  //  rotateY(0);
-  //  rotateZ(0);
-  //  rect(0,0,30,30);
-  //popMatrix();
-  //pushMatrix();
-  //  fill(0,0,255);
-  //  translate(50, -40, 50);
-  //  rotateX(PI/2);
-  //  rotateY(0);
-  //  rotateZ(0);
-  //  rect(0,0,30,30);
-  //popMatrix();
-  
-  //pushMatrix();
-  //  fill(0,255,0);
-  //  translate(80, -70, 80);
-  //  rotateY(PI/2);
-  //  rect(0,0,30,30);
-  //popMatrix();
-  //pushMatrix();
-  //  fill(0,255,0);
-  //  translate(50, -70, 80);
-  //  rotateY(PI/2);
-  //  rect(0,0,30,30);
-  //popMatrix();
-  
-  //pushMatrix();
-  //  fill(255, 0, 0);
-  //  translate(80, -70, 80);
-  //  rotateZ(PI/2);
-  //  rect(0,0,30,30);
-  //popMatrix();  
-  //pushMatrix();
-  //  fill(255, 0, 0);
-  //  translate(80, -70, 50);
-  //  rotateZ(PI/2);
-  //  rect(0,0,30,30);
-  //popMatrix();  
-  
-  ////startAlarm
-  //int m = minute();
-  //int s = second();
-  //int time = m+s;
-  //if(time == countDown+timer){
-  //  page = 0;
-  //}
-
   
 }
 
 // draw wall
-void drawWall() {
+void drawWall2() {
   final Box box = new Box(this, CASE_SIZE);
   box.drawMode(S3D.TEXTURE);
   //box.setTexture(WALL_TEXTURE);
@@ -229,8 +172,8 @@ void drawWall() {
 /**
  * Draws tree in current case.c
  */
-void drawTree() {
-  //drawGround();
+void drawTree2() {
+  //drawGround2();
   final Ellipsoid tree = new Ellipsoid(this, 20, 30);
   tree.setTexture(TREE_TEXTURE);
   tree.drawMode(Shape3D.TEXTURE);
@@ -245,7 +188,7 @@ void drawTree() {
   noFill();
 }
 
-void drawTime() {
+void drawTime2() {
   final Box time = new Box(this, CASE_SIZE);
   time.drawMode(S3D.TEXTURE);
   time.setTexture(WALL_TEXTURE);
@@ -263,8 +206,8 @@ void drawTime() {
 /**
  * Draws ground in current case.
  */
-void drawGround() {
-  beginShape(QUADS); //rectangle
+void drawGround2() {
+  beginShape(QUADS); //rectangle2
   //texture(WALL_TEXTURE);
   stroke(255); //line color = white
   strokeWeight(10); // line size = 10
@@ -281,7 +224,7 @@ void drawGround() {
 /**
  * Draws water in current case.
  */
-void drawWater() {
+void drawWater2() {
   beginShape(QUADS);
   texture(WATER_TEXTURE);
   vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
@@ -292,7 +235,7 @@ void drawWater() {
   noFill();
 }
 
-void drawEndPoint() {
+void drawEndPoint2() {
   beginShape(QUADS);
   texture(GROUND_TEXTURE);
   vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
@@ -306,7 +249,7 @@ void drawEndPoint() {
 /**
  * Draws sphere in current case.
  */
-void drawSphere() {
+void drawSphere2() {
   pushMatrix();
   translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2);
   sphere(CASE_SIZE / 2);
@@ -324,29 +267,30 @@ void drawEnemy(){
   pushMatrix();
   
   translate(4*CASE_SIZE / 2, -CASE_SIZE / 3, 3*CASE_SIZE / 2);
-  rotateY(angle/8);
+  rotateY(angle2/8);
   
   translate(CASE_SIZE, -CASE_SIZE / 2, CASE_SIZE);
   enemy.draw();
   
    //for game optimization -ing
 
-  if(angle<50){
-    angle++;
+  if(angle2<50){
+    angle2++;
   }else{
-    angle=0;
+    angle2=0;
   }
   
-  angle++;
+  angle2++;
   popMatrix();
   
   noFill();
 }
 */
 
-void drawItem(){
-  if(isItem(camera) && flag && mousePressed){ //eat item = count--;
-      drawItemCheck();
+void drawItem2_1(){
+  
+  if(isItem2_1(camera3) && flag && mousePressed){ //eat item = count--;
+      drawItem2_1Check();
       a=a/2;
       count--; //initialized count = 5
       flag =false;
@@ -361,23 +305,23 @@ void drawItem(){
     
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
-      rotateY(angle);
+      rotateY(angle2);
       
     boolean flag2=true;item.draw();
       //for game optimization
-      if(angle < 6){
-        angle++;
+      if(angle2 < 6){
+        angle2++;
       }else{
-        angle=0;
+        angle2=0;
       }
       
-      angle++;
-      //aVelocity = aVelocity + aAcceleration;
-      //angle = angle + aVelocity;
+      angle2++;
+      //aVelocity2 = aVelocity2 + aAcceleration2;
+      //angle2 = angle2 + aVelocity2;
       
       /*
-      if(angle>50){
-        aVelocity *= -1;
+      if(angle2>50){
+        aVelocity2 *= -1;
       }*/
       popMatrix();
       
@@ -385,10 +329,10 @@ void drawItem(){
     }
 }
 
-void drawItem2(){
+void drawItem2_2(){
 
-    if(isItem2(camera) && flag2 && mousePressed){ //eat item = count--;
-      drawItemCheck();
+    if(isItem2_2(camera3) && flag2 && mousePressed){ //eat item = count--;
+      drawItem2_1Check();
       b=b/2;
       count--; //initialized count = 5
       flag2 = false;
@@ -402,17 +346,17 @@ void drawItem2(){
     
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
-      rotateY(angle);
+      rotateY(angle2);
       item2.draw();
       
       //for game optimization
-      if(angle < 6){
-        angle++;
+      if(angle2 < 6){
+        angle2++;
       }else{
-        angle=0;
+        angle2=0;
       }
       
-      angle++;
+      angle2++;
     
       popMatrix();
     
@@ -421,7 +365,7 @@ void drawItem2(){
 }
 
 
-void drawItemCheck(){
+void drawItem2_1Check(){
   beginShape(QUADS);
   texture(GROUND_TEXTURE);
   vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
@@ -434,8 +378,8 @@ void drawItemCheck(){
 
 // TODO: remake it
 //6.0 -> 1 circle moved.
-void mouseMoved() {
-  camera.look(radians(mouseX - pmouseX) / 6.0, radians(mouseY - pmouseY) / 6.0);
+void mouseMoved2() {
+  camera3.look(radians(mouseX - pmouseX) / 6.0, radians(mouseY - pmouseY) / 6.0);
 }
 
 /**
@@ -443,10 +387,10 @@ void mouseMoved() {
  *
  * @param camera camera object
  */
-void onStepForward(final Camera camera) {
-  camera.dolly(-0.5);
+void onStepForward2(final Camera camera3) {
+  camera3.dolly(-0.5);
   final float[] position = camera.position();
-  camera.jump(position[0], CAMERA_Y, position[2]);  // force attitude
+  camera3.jump(position[0], CAMERA_Y, position[2]);  // force attitude
 }
 
 /**
@@ -454,10 +398,10 @@ void onStepForward(final Camera camera) {
  *
  * @param camera camera object
  */
-void onStepBackward(final Camera camera) {
-  camera.dolly(0.5); //camera.dolly(distance)
+void onStepBackward2(final Camera camera3) {
+  camera3.dolly(0.5); //camera.dolly(distance)
   final float[] position = camera.position();
-  camera.jump(position[0], CAMERA_Y, position[2]);  // force attitude    //jump(locationX, locationY, locationZ)
+  camera3.jump(position[0], CAMERA_Y, position[2]);  // force attitude    //jump(locationX, locationY, locationZ)
 }
 
 
@@ -468,37 +412,37 @@ void onStepBackward(final Camera camera) {
  *
  * @return true - camera is in allowed map case, false - not.
  */
-boolean isAllowedCase(final Camera camera) { //if blank, 'S', 'F', '@', '^' allowed to go!
-  final char caseContent = caseContent(camera);
+boolean isAllowedCase2(final Camera camera3) { //if blank, 'S', 'F', '@', '^' allowed to go!
+  final char caseContent2 = caseContent2(camera3);
   //if user does not eat the item, end gate does not open
   if(count==0){
-  return caseContent == 'G'
-         || caseContent == 'S'
-         || caseContent == 'F'  
-         || caseContent == '@'
-         || caseContent == '^';
+  return caseContent2 == ' '
+         || caseContent2 == 'S'
+         || caseContent2 == 'F'  
+         || caseContent2 == '@'
+         || caseContent2 == '^';
   }
   else{
-  return caseContent == 'G'
-         || caseContent == 'F'  
-         || caseContent == '@'
-         || caseContent == '^';
+  return caseContent2 == ' '
+         || caseContent2 == 'F'  
+         || caseContent2 == '@'
+         || caseContent2 == '^';
   }
 }
 
-boolean isItem(final Camera camera){ //when camera catch the item.
-  final char caseContent = caseContent(camera);
-  return caseContent == '@';
+boolean isItem2_1(final Camera camera3){ //when camera catch the item.
+  final char caseContent2 = caseContent2(camera3);
+  return caseContent2 == '@';
 }
 
-boolean isItem2(final Camera camera){ //when camera catch the item.
-  final char caseContent = caseContent(camera);
-  return caseContent == '^';
+boolean isItem2_2(final Camera camera3){ //when camera catch the item.
+  final char caseContent2 = caseContent2(camera3);
+  return caseContent2 == '^';
 }
 
-boolean isEnd(final Camera camera){ //when camera approach to end point(S).
-  final char caseContent = caseContent(camera);
-  return caseContent == 'S';
+boolean isEnd2(final Camera camera3){ //when camera approach to end point(S).
+  final char caseContent2 = caseContent2(camera3);
+  return caseContent2 == 'S';
  }
 /**
  * Returns the content of current case of the map.
@@ -507,8 +451,8 @@ boolean isEnd(final Camera camera){ //when camera approach to end point(S).
  *
  * @return character of content of the current case of the map
  */
-char caseContent(final Camera camera) {
-  final int[] caseId= currentCase(camera);
+char caseContent2(final Camera camera3) {
+  final int[] caseId= currentCase2(camera3);
   return map[caseId[0]][caseId[1]];
 }
 
@@ -519,8 +463,8 @@ char caseContent(final Camera camera) {
  *
  * @return array with row & col in which camera currently situated
  */
-int[] currentCase(final Camera camera) {
-  final float[] position = camera.position();
+int[] currentCase2(final Camera camera3) {
+  final float[] position = camera3.position();
   
   return new int[]{
     (int) (position[2] / CASE_SIZE),

@@ -6,23 +6,31 @@ void selectGamePage() {
   image(titleImg, width/2-500, -50, 1000, 400);
   
   noStroke();
-  fill(255,255,255,150);
-  rect(200, 250, width-400, height-300, 40);
+  //show the outer grey box
+  //fill(255,255,255,150);
+  //rect(200, 250, width-400, height-300, 40);
 
+  // setup camera // camera(eye, center, n)
+  final float CAMERA_Y = -5;   // camera permanent attitude
+  camera3 = new Camera(this, 30, 6*CAMERA_Y, 30); //30, -5, 30 //sub camera
+  // coordinate for the camera position
+  // coordinate for the center of interest
+  // component of the "up" direction vector
+  camera4 = new Camera(this, width/2,height/2,900  ,width/2,height/2,0    ,0,0,0); //main camera //(eye, center, upVector)
   
   // button
   stroke(255);
   selectGameBtnIcon.draw();
-  homeBtn.draw();
-  startGameBtn.draw();
+  exitBtn.draw();
+  nextStageIcon.draw();
   
   // button click
   if (mousePressed) {
-    if (homeBtn.click) {
-      page = 0;
+    if (exitBtn.click) {
+      exit();
     }
-    else if (startGameBtn.click) {
-      page = 1;
+    else if (nextStageIcon.click) {
+      page = 6;
     }
   }
   
