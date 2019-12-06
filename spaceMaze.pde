@@ -9,11 +9,11 @@ AudioPlayer bgm;
 float volume = 0;
 
 // camera: gamePage, camera2: mainPage
-Camera camera, camera2;
-Camera camera3, camera4;
+Camera camera, camera2, camera3;
 
 final float CASE_SIZE = 10;  // size of one case 
 final float CAMERA_Y = -5;   // camera permanent attitude
+final float CAMERA_YY = -5;   // camera permanent attitude
 final float CAMERA_Z = 5;
 
 Star[] stars = new Star[800];
@@ -59,6 +59,8 @@ boolean flag2 = true;
 
 boolean selectflag=false;
 
+int cameraflag=0;
+
 Button startBtn;
 Button settingBtn;
 Button exitBtn;
@@ -103,19 +105,16 @@ void setup() {
   bgm.loop();
   bgm.setGain(volume); 
   
+  
+  // coordinate for the camera position
+  // coordinate for the center of interest
+  // component of the "up" direction vector
+    camera2 = new Camera(this, width/2,height/2,900  ,width/2,height/2,0    ,0,0,0); //main camera //(eye, center, upVector)
+
   // setup camera // camera(eye, center, n)
-  camera = new Camera(this, 30, 6*CAMERA_Y, 30); //30, -5, 30 //sub camera
-  // coordinate for the camera position
-  // coordinate for the center of interest
-  // component of the "up" direction vector
-  camera2 = new Camera(this, width/2,height/2,900  ,width/2,height/2,0    ,0,0,0); //main camera //(eye, center, upVector)
+    camera = new Camera(this, 25, 6*CAMERA_Y, 35); //25, -5, 30 //game camera
     
-    
-  camera3 = new Camera(this, 30, 6*CAMERA_Y, 30); //30, -5, 30 //sub camera
-  // coordinate for the camera position
-  // coordinate for the center of interest
-  // component of the "up" direction vector
-  camera4 = new Camera(this, width/2,height/2,900  ,width/2,height/2,0    ,0,0,0); //main camera //(eye, center, upVector)  
+    camera3 = new Camera(this, 25, 6*CAMERA_YY, 35); //30, -5, 30 //game camera
     
  /************** Load map 1-stage from file *************/
   final String[] lines = loadStrings("default.map");
@@ -163,7 +162,7 @@ void setup() {
   startGameBtn = new Button(width-380, height/2+400, 130, 40, "Game Start", 40);
   settingBtnIcon = new Button(300, 250, 130, 45, "Setting", 45);
   guideBtnIcon = new Button(300, 250, 130, 45, "How To Use", 40);
-  selectGameBtnIcon = new Button(300, 250, 130, 45, "Game Over", 40);
+  gameOverBtnIcon = new Button(300, 250, 130, 45, "Game Over", 40);
   selectGameBtnIcon = new Button(300, 250, 130, 45, "Select Game", 40);
   nextStageIcon = new Button(width-380, height/2+200, 130, 40, "Next Stage", 40);
   
@@ -181,6 +180,20 @@ void setup() {
   timer4 = new timer(49,-70,80,0,PI/2,0);
   timer5 = new timer(80,-70,81,0,0,PI/2);
   timer6 = new timer(80,-70,49,0,0,PI/2);
+  
+  
+  //cameraflag = 0e -> maincamera(camera2) ON
+  //cameraflag = 1 -> gamecamera(camera) ON
+  //cameraflag = 2 -> gamecamera(camera3) ON
+  if(cameraflag == 0){
+    camera2.feed();
+  }
+  else if(cameraflag == 1){
+    camera.feed();
+  }
+  else if(cameraflag ==2){
+    camera3.feed();
+  }
 }
 
 
@@ -192,23 +205,27 @@ void draw() {
   
   // mainPage
   if (page == 0) {
-    camera2.feed();
+    cameraflag=0;
+    //camera2.feed();
     mainPage();
   }
   
   // gamePage
   else if (page == 1) {
+    cameraflag=1;
     bgm.pause();
     gamePage();
   }
   
   // settingPage
   else if (page == 2) {
+    cameraflag=0;
     settingPage();
   }
   
   // guidePage(how to use page)
   else if (page == 3) {
+    cameraflag=0;
     guidePage();
   }
   
@@ -217,8 +234,9 @@ void draw() {
     camera2.feed();
     selectGamePage();
   }
+  
   else if (page == 6){
-    camera4.feed();
+    
     bgm.pause();
     gamePage2();
   }

@@ -79,36 +79,14 @@ void gamePage() {
         translate(col * CASE_SIZE, 0, 0);
         
         switch (map[row][col]) {
-          case '#':
-            drawWall();
-            break;
-          case '$':
-            //drawTree();
-            break;
-          case '~':
-            //drawWater();
-            break;
-          case '@':
-            drawItem();
-            break;
-          case '^':
-            drawItem2();
-            break;
-          case '%':
-            //drawEnemy();
-            break;
-          case '&':
-            drawTime();
-            break;
-          case 'S':
-            drawEndPoint();
-            break;
-          case 'G':
-            drawGround();
-            break;
-          default:
-            
-            break;
+          case '#': drawWall(); break; //wall 
+          case '@': drawItem(); break; //item 1
+          case '^': drawItem2(); break;  //item 2
+          case '%': //drawEnemy();
+            break; //enemy
+          case 'S': drawEndPoint(); break; //end point
+          case 'G': drawGround(); break; //ground
+          default: break;
         }
   
         popMatrix();
@@ -180,40 +158,6 @@ void drawWall() {
 }
 
 /**
- * Draws tree in current case.c
- */
-void drawTree() {
-  //drawGround();
-  final Ellipsoid tree = new Ellipsoid(this, 20, 30);
-  tree.setTexture(TREE_TEXTURE);
-  tree.drawMode(Shape3D.TEXTURE);
-  tree.setRadius(CASE_SIZE / 4);
-
-  pushMatrix();
-  translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
-  
-  tree.draw();
-  popMatrix();
-  
-  noFill();
-}
-
-void drawTime() {
-  final Box time = new Box(this, CASE_SIZE);
-  time.drawMode(S3D.TEXTURE);
-  time.setTexture(WALL_TEXTURE);
-  
-  translate(10*CASE_SIZE/2, -6*CASE_SIZE/2, 10*CASE_SIZE/2); //CASE_SIZE = 10
-  pushMatrix();
-  //scale(2);
-  noStroke();
-  time.draw();
-  popMatrix();
-
-  noFill();
-}
-
-/**
  * Draws ground in current case.
  */
 void drawGround() {
@@ -231,19 +175,6 @@ void drawGround() {
   noFill();
 }
 
-/**
- * Draws water in current case.
- */
-void drawWater() {
-  beginShape(QUADS);
-  texture(WATER_TEXTURE);
-  vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
-  vertex(CASE_SIZE, 0, 0, 1, 0);
-  vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
-  vertex(0, 0, CASE_SIZE, 0, 1);
-  endShape();
-  noFill();
-}
 
 void drawEndPoint() {
   beginShape(QUADS);
@@ -495,17 +426,6 @@ int[] currentCase(final Camera camera) {
   final float[] position = camera.position();
   
   return new int[]{
-    (int) (position[2] / CASE_SIZE),
-    (int) (position[0] / CASE_SIZE) };
+    (int) ( position[2] / CASE_SIZE),
+    (int) ( position[0] / CASE_SIZE) };
 }
-
-/*
-void mousePressed() {
-  noLoop();
-  count--;
-}
-
-void mouseReleased() {
-  loop();
-}
-*/

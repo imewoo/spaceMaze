@@ -10,13 +10,6 @@ void selectGamePage() {
   //fill(255,255,255,150);
   //rect(200, 250, width-400, height-300, 40);
 
-  // setup camera // camera(eye, center, n)
-  final float CAMERA_Y = -5;   // camera permanent attitude
-  camera3 = new Camera(this, 30, 6*CAMERA_Y, 30); //30, -5, 30 //sub camera
-  // coordinate for the camera position
-  // coordinate for the center of interest
-  // component of the "up" direction vector
-  camera4 = new Camera(this, width/2,height/2,900  ,width/2,height/2,0    ,0,0,0); //main camera //(eye, center, upVector)
   
   // button
   stroke(255);

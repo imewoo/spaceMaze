@@ -11,6 +11,7 @@ float aVelocity2 = 0;
 float aAcceleration2 = 0.001;
 
 void gamePage2() {
+   
   // star
   background(0);
   speed = 2;
@@ -33,11 +34,17 @@ void gamePage2() {
       case DOWN:
         onStepBackward2(camera3);
         break;
+       case LEFT:
+        onStepLeft2(camera);
+        break;
+      case RIGHT:
+        onStepRight2(camera);
+        break;
     }
     
     /* If we are in non allowed area (wall, tree or water) cancel the movement */
     if (!isAllowedCase2(camera3)) { // if not allowed to move 
-      camera3.jump(position[0], CAMERA_Y, position[2]);  // reset previous position
+      camera3.jump(position[0], CAMERA_YY, position[2]);  // reset previous position
     }
     
     /*
@@ -73,31 +80,14 @@ void gamePage2() {
         translate(col * CASE_SIZE, 0, 0);
         
         switch (map2[row][col]) {
-          case '#':
-            drawWall2();
-            break;
-          case '$':
-            //drawTree2();
-            break;
-          case '~':
-            //drawWater2();
-            break;
-          case '@':
-            drawItem2_1();
-            break;
-          case '^':
-            drawItem2_2();
-            break;
-          case '%':
-            //drawEnemy();
-            break;
-          case '&':
-            drawTime2();
-            break;
-          case 'S':
-            drawEndPoint2();
-          default:
-            drawGround2();
+          case '#': drawWall2();  break; // wall
+          case '@': drawItem2_1(); break; //item 1
+          case '^': drawItem2_2(); break; //item 2
+          case '%'://drawEnemy();
+            break; //enemy
+          case 'S': drawEndPoint2(); //end point
+          case 'G': drawGround2(); break; //ground
+          default: break;
         }
   
         popMatrix();
@@ -169,39 +159,6 @@ void drawWall2() {
   noFill();
 }
 
-/**
- * Draws tree in current case.c
- */
-void drawTree2() {
-  //drawGround2();
-  final Ellipsoid tree = new Ellipsoid(this, 20, 30);
-  tree.setTexture(TREE_TEXTURE);
-  tree.drawMode(Shape3D.TEXTURE);
-  tree.setRadius(CASE_SIZE / 4);
-
-  pushMatrix();
-  translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
-  
-  tree.draw();
-  popMatrix();
-  
-  noFill();
-}
-
-void drawTime2() {
-  final Box time = new Box(this, CASE_SIZE);
-  time.drawMode(S3D.TEXTURE);
-  time.setTexture(WALL_TEXTURE);
-  
-  translate(10*CASE_SIZE/2, -6*CASE_SIZE/2, 10*CASE_SIZE/2); //CASE_SIZE = 10
-  pushMatrix();
-  //scale(2);
-  noStroke();
-  time.draw();
-  popMatrix();
-
-  noFill();
-}
 
 /**
  * Draws ground in current case.
@@ -221,19 +178,6 @@ void drawGround2() {
   noFill();
 }
 
-/**
- * Draws water in current case.
- */
-void drawWater2() {
-  beginShape(QUADS);
-  texture(WATER_TEXTURE);
-  vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
-  vertex(CASE_SIZE, 0, 0, 1, 0);
-  vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
-  vertex(0, 0, CASE_SIZE, 0, 1);
-  endShape();
-  noFill();
-}
 
 void drawEndPoint2() {
   beginShape(QUADS);
@@ -389,8 +333,8 @@ void mouseMoved2() {
  */
 void onStepForward2(final Camera camera3) {
   camera3.dolly(-0.5);
-  final float[] position = camera.position();
-  camera3.jump(position[0], CAMERA_Y, position[2]);  // force attitude
+  final float[] position = camera3.position();
+  camera3.jump(position[0], CAMERA_YY, position[2]);  // force attitude
 }
 
 /**
@@ -401,9 +345,26 @@ void onStepForward2(final Camera camera3) {
 void onStepBackward2(final Camera camera3) {
   camera3.dolly(0.5); //camera.dolly(distance)
   final float[] position = camera.position();
-  camera3.jump(position[0], CAMERA_Y, position[2]);  // force attitude    //jump(locationX, locationY, locationZ)
+  camera3.jump(position[0], CAMERA_YY, position[2]);  // force attitude    //jump(locationX, locationY, locationZ)
 }
 
+/**
+ * Handler of command to move camera left.
+ *
+ * @param camera camera object
+ */
+void onStepLeft2(final Camera camera) {
+  camera.truck(-0.5);
+}
+
+/**
+ * Handler of command to move camera right.
+ *
+ * @param camera camera object
+ */
+void onStepRight2(final Camera camera) {
+  camera.truck(0.5);
+}
 
 /**
  * Checks if camera is in allowed map case.
@@ -453,7 +414,7 @@ boolean isEnd2(final Camera camera3){ //when camera approach to end point(S).
  */
 char caseContent2(final Camera camera3) {
   final int[] caseId= currentCase2(camera3);
-  return map[caseId[0]][caseId[1]];
+  return map2[caseId[0]][caseId[1]];
 }
 
 /**
@@ -464,20 +425,9 @@ char caseContent2(final Camera camera3) {
  * @return array with row & col in which camera currently situated
  */
 int[] currentCase2(final Camera camera3) {
-  final float[] position = camera3.position();
+  final float[] position2 = camera3.position();
   
   return new int[]{
-    (int) (position[2] / CASE_SIZE),
-    (int) (position[0] / CASE_SIZE) };
+    (int) (position2[2] / CASE_SIZE),
+    (int) (position2[0] / CASE_SIZE) };
 }
-
-/*
-void mousePressed() {
-  noLoop();
-  count--;
-}
-
-void mouseReleased() {
-  loop();
-}
-*/
