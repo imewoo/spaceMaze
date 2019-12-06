@@ -120,7 +120,7 @@ void setup() {
  /* Load textures */
   WALL_TEXTURE = loadImage("wall.png");
   ENEMY_TEXTURE = loadImage("wall-texture.jpg");
-  ITEM_TEXTURE = loadImage("astronaut.png");
+  ITEM_TEXTURE = loadImage("water-texture.jpg");
   GROUND_TEXTURE = loadImage("grass-texture.png");
   WATER_TEXTURE = loadImage("water-texture.jpg");
   TREE_TEXTURE = loadImage("tree-texture.jpg");

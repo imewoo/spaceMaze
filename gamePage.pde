@@ -33,6 +33,12 @@ void gamePage() {
       case DOWN:
         onStepBackward(camera);
         break;
+      case LEFT:
+        onStepLeft(camera);
+        break;
+      case RIGHT:
+        onStepRight(camera);
+        break;
     }
     
     /* If we are in non allowed area (wall, tree or water) cancel the movement */
@@ -51,7 +57,7 @@ void gamePage() {
     //In this case, 'S' is the end point.
     if(count==0 && isEnd(camera)){ 
       selectflag=true;
-     page = 5;
+     page = 5; // selectGamePage
      bgm.loop();
     }
     
@@ -145,60 +151,7 @@ void gamePage() {
   popMatrix();
   pushMatrix();
     timer6.draw();
-  popMatrix();
-
-  //pushMatrix();
-  //  fill(0,0,255);
-  //  translate(50, -70, 50);
-  //  rotateX(PI/2);
-  //  rotateY(0);
-  //  rotateZ(0);
-  //  rect(0,0,30,30);
-  //popMatrix();
-  //pushMatrix();
-  //  fill(0,0,255);
-  //  translate(50, -40, 50);
-  //  rotateX(PI/2);
-  //  rotateY(0);
-  //  rotateZ(0);
-  //  rect(0,0,30,30);
-  //popMatrix();
-  
-  //pushMatrix();
-  //  fill(0,255,0);
-  //  translate(80, -70, 80);
-  //  rotateY(PI/2);
-  //  rect(0,0,30,30);
-  //popMatrix();
-  //pushMatrix();
-  //  fill(0,255,0);
-  //  translate(50, -70, 80);
-  //  rotateY(PI/2);
-  //  rect(0,0,30,30);
-  //popMatrix();
-  
-  //pushMatrix();
-  //  fill(255, 0, 0);
-  //  translate(80, -70, 80);
-  //  rotateZ(PI/2);
-  //  rect(0,0,30,30);
-  //popMatrix();  
-  //pushMatrix();
-  //  fill(255, 0, 0);
-  //  translate(80, -70, 50);
-  //  rotateZ(PI/2);
-  //  rect(0,0,30,30);
-  //popMatrix();  
-  
-  ////startAlarm
-  //int m = minute();
-  //int s = second();
-  //int time = m+s;
-  //if(time == countDown+timer){
-  //  page = 0;
-  //}
-
-  
+  popMatrix();  
 }
 
 // draw wall
@@ -359,7 +312,8 @@ void drawItem(){
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
       rotateY(angle);
       
-    boolean flag2=true;item.draw();
+    boolean flag2=true;
+    item.draw();
       //for game optimization
       if(angle < 6){
         angle++;
@@ -392,6 +346,7 @@ void drawItem2(){
     
     else{
       final Ellipsoid item2 = new Ellipsoid(this, 20, 30);
+      //final Ellipsoid item2 = new Ellipsoid(this, 20, 30);
       item2.setTexture(ITEM_TEXTURE);
       item2.drawMode(Shape3D.TEXTURE);
       item2.setRadius(b*CASE_SIZE / 4);
@@ -456,6 +411,23 @@ void onStepBackward(final Camera camera) {
   camera.jump(position[0], CAMERA_Y, position[2]);  // force attitude    //jump(locationX, locationY, locationZ)
 }
 
+/**
+ * Handler of command to move camera left.
+ *
+ * @param camera camera object
+ */
+void onStepLeft(final Camera camera) {
+  camera.truck(-0.5);
+}
+
+/**
+ * Handler of command to move camera right.
+ *
+ * @param camera camera object
+ */
+void onStepRight(final Camera camera) {
+  camera.truck(0.5);
+}
 
 /**
  * Checks if camera is in allowed map case.
