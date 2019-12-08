@@ -1,17 +1,19 @@
-// page = 1
-int timeCount2=0; //time count
-int die_timeCount2=0; //if game end, timeCount2 remain
+// page = 6
+//int timeCount2=0; //time count
+//int die_timeCount2=0; //if game end, timeCount2 remain
 
-int frameConstant2=300; //initialize fps
-int game_end_confirm2=1; //set end
-float delta2 = 0.0f ;
+//int frameConstant2=300; //initialize fps
+//int game_end_confirm2=1; //set end
+//float delta2 = 0.0f ;
 
 float angle2 = 0;
-float aVelocity2 = 0;
-float aAcceleration2 = 0.001;
+//float aVelocity2 = 0;
+//float aAcceleration2 = 0.001;
 
 void gamePage2() {
    
+  cameraflag=1; // for mouseMoved
+    
   // star
   background(0);
   speed = 2;
@@ -22,10 +24,12 @@ void gamePage2() {
       stars[i].show();
   }
   
+  /* Pose camera3 */ 
+  camera3.feed();
   
-  /* Navigate camera */
+  /* Navigate camera3 */
   if (keyPressed && key == CODED) {
-    final float[] position = camera3.position();
+    final float[] position2 = camera3.position();
     
     switch (keyCode) {
       case UP:
@@ -35,20 +39,20 @@ void gamePage2() {
         onStepBackward2(camera3);
         break;
        case LEFT:
-        onStepLeft2(camera);
+        onStepLeft2(camera3);
         break;
       case RIGHT:
-        onStepRight2(camera);
+        onStepRight2(camera3);
         break;
     }
     
     /* If we are in non allowed area (wall, tree or water) cancel the movement */
     if (!isAllowedCase2(camera3)) { // if not allowed to move 
-      camera3.jump(position[0], CAMERA_YY, position[2]);  // reset previous position
+      camera3.jump(position2[0], CAMERA_YY, position2[2]);  // reset previous position2
     }
     
     /*
-    if(isItem2_1(camera)){ //eat item = count--;
+    if(isItem2_1(camera3)){ //eat item = count--;
       drawItem2_1Check();
       count--; //initialized count = 5
     }*/
@@ -56,18 +60,16 @@ void gamePage2() {
     //This code will be completed after ending ItemCheck function.
     //count == 0 & approach to 'S'
     //In this case, 'S' is the end point.
-    if(count==0 && isEnd2(camera3)){ 
+    if(count2==0 && isEnd2(camera3)){ 
       selectflag=true;
      page = 5;
      bgm.loop();
     }
     
-    println(count);
+    println("2 = " +count2);
   }
   
   
-  /* Pose camera */ 
-  camera3.feed();
     
     
   /* Draw map */
@@ -81,8 +83,8 @@ void gamePage2() {
         
         switch (map2[row][col]) {
           case '#': drawWall2();  break; // wall
-          case '@': drawItem2_1(); break; //item 1
-          case '^': drawItem2_2(); break; //item 2
+          case 'A': drawItem2_1(); break; //item 1
+          case 'B': drawItem2_2(); break; //item 2
           case '%'://drawEnemy();
             break; //enemy
           case 'S': drawEndPoint2(); //end point
@@ -98,44 +100,20 @@ void gamePage2() {
     
     
   // draw timerBox
-  pushMatrix();
-    timerBox1.draw();
-  popMatrix();
-  pushMatrix();
-    timerBox2.draw();
-  popMatrix();
-  pushMatrix();
-    timerBox3.draw();
-  popMatrix();
-  pushMatrix();
-    timerBox4.draw();
-  popMatrix();
-  pushMatrix();
-    timerBox5.draw();
-  popMatrix();
-  pushMatrix();
-    timerBox6.draw();
-  popMatrix();
+  pushMatrix();    timerBox1.draw();  popMatrix();
+  pushMatrix();    timerBox2.draw();  popMatrix();
+  pushMatrix();    timerBox3.draw();  popMatrix();
+  pushMatrix();    timerBox4.draw();  popMatrix();
+  pushMatrix();    timerBox5.draw();  popMatrix();
+  pushMatrix();    timerBox6.draw();  popMatrix();
   
-  // draw timer
-  pushMatrix();
-    timer1.draw();
-  popMatrix();
-  pushMatrix();
-    timer2.draw();
-  popMatrix();
-  pushMatrix();
-    timer3.draw();
-  popMatrix();
-  pushMatrix();
-    timer4.draw();
-  popMatrix();
-  pushMatrix();
-    timer5.draw();
-  popMatrix();
-  pushMatrix();
-    timer6.draw();
-  popMatrix();
+    // draw timer
+  pushMatrix();    timer1.draw();  popMatrix();
+  pushMatrix();    timer2.draw();  popMatrix();
+  pushMatrix();    timer3.draw();  popMatrix();
+  pushMatrix();    timer4.draw();  popMatrix();
+  pushMatrix();    timer5.draw();  popMatrix();
+  pushMatrix();    timer6.draw();  popMatrix();
   
 }
 
@@ -233,25 +211,24 @@ void drawEnemy(){
 
 void drawItem2_1(){
   
-  if(isItem2_1(camera3) && flag && mousePressed){ //eat item = count--;
+  if(isItem2_1(camera3) && flag3 && mousePressed){ //eat item = count--;
       drawItem2_1Check();
-      a=a/2;
-      count--; //initialized count = 5
-      flag =false;
-      println(flag);
+      aa=aa/2;
+      count2--; //initialized count = 5
+      flag3 =false;
     }
     
     else{
       final Ellipsoid item = new Ellipsoid(this, 20, 30);
       item.setTexture(ITEM_TEXTURE);
       item.drawMode(Shape3D.TEXTURE);
-      item.setRadius(a*CASE_SIZE / 4);
+      item.setRadius(aa*CASE_SIZE / 4);
     
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
       rotateY(angle2);
       
-    boolean flag2=true;item.draw();
+     item.draw();
       //for game optimization
       if(angle2 < 6){
         angle2++;
@@ -275,18 +252,18 @@ void drawItem2_1(){
 
 void drawItem2_2(){
 
-    if(isItem2_2(camera3) && flag2 && mousePressed){ //eat item = count--;
+    if(isItem2_2(camera3) && flag4 && mousePressed){ //eat item = count--;
       drawItem2_1Check();
-      b=b/2;
-      count--; //initialized count = 5
-      flag2 = false;
+      bb=bb/2;
+      count2--; //initialized count = 5
+      flag4 = false;
     }
     
     else{
       final Ellipsoid item2 = new Ellipsoid(this, 20, 30);
       item2.setTexture(ITEM_TEXTURE);
       item2.drawMode(Shape3D.TEXTURE);
-      item2.setRadius(b*CASE_SIZE / 4);
+      item2.setRadius(bb*CASE_SIZE / 4);
     
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
@@ -320,109 +297,105 @@ void drawItem2_1Check(){
   noFill();
 }
 
-// TODO: remake it
-//6.0 -> 1 circle moved.
-void mouseMoved2() {
-  camera3.look(radians(mouseX - pmouseX) / 6.0, radians(mouseY - pmouseY) / 6.0);
-}
+
 
 /**
- * Handler of command to move camera forward.
+ * Handler of command to move camera3 forward.
  *
- * @param camera camera object
+ * @param camera3 camera3 object
  */
 void onStepForward2(final Camera camera3) {
   camera3.dolly(-0.5);
-  final float[] position = camera3.position();
-  camera3.jump(position[0], CAMERA_YY, position[2]);  // force attitude
+  final float[] position2 = camera3.position();
+  camera3.jump(position2[0], CAMERA_YY, position2[2]);  // force attitude
 }
 
 /**
- * Handler of command to move camera backward.
+ * Handler of command to move camera3 backward.
  *
- * @param camera camera object
+ * @param camera3 camera3 object
  */
 void onStepBackward2(final Camera camera3) {
-  camera3.dolly(0.5); //camera.dolly(distance)
-  final float[] position = camera.position();
-  camera3.jump(position[0], CAMERA_YY, position[2]);  // force attitude    //jump(locationX, locationY, locationZ)
+  camera3.dolly(0.5); //camera3.dolly(distance)
+  final float[] position2 = camera3.position();
+  camera3.jump(position2[0], CAMERA_YY, position2[2]);  // force attitude    //jump(locationX, locationY, locationZ)
 }
 
 /**
- * Handler of command to move camera left.
+ * Handler of command to move camera3 left.
  *
- * @param camera camera object
+ * @param camera3 camera3 object
  */
-void onStepLeft2(final Camera camera) {
-  camera.truck(-0.5);
+void onStepLeft2(final Camera camera3) {
+  camera3.truck(-0.5);
 }
 
 /**
- * Handler of command to move camera right.
+ * Handler of command to move camera3 right.
  *
- * @param camera camera object
+ * @param camera3 camera3 object
  */
-void onStepRight2(final Camera camera) {
-  camera.truck(0.5);
+void onStepRight2(final Camera camera3) {
+  camera3.truck(0.5);
 }
 
 /**
- * Checks if camera is in allowed map case.
+ * Checks if camera3 is in allowed map case.
  *
- * @param camera camera object
+ * @param camera3 camera3 object
  *
- * @return true - camera is in allowed map case, false - not.
+ * @return true - camera3 is in allowed map case, false - not.
  */
 boolean isAllowedCase2(final Camera camera3) { //if blank, 'S', 'F', '@', '^' allowed to go!
   final char caseContent2 = caseContent2(camera3);
   //if user does not eat the item, end gate does not open
-  if(count==0){
+  if(count2==0){
   return caseContent2 == ' '
          || caseContent2 == 'S'
          || caseContent2 == 'F'  
-         || caseContent2 == '@'
-         || caseContent2 == '^';
+         || caseContent2 == 'B'
+         || caseContent2 == 'A';
   }
   else{
   return caseContent2 == ' '
          || caseContent2 == 'F'  
-         || caseContent2 == '@'
-         || caseContent2 == '^';
+         || caseContent2 == 'B'
+         || caseContent2 == 'A';
   }
 }
 
-boolean isItem2_1(final Camera camera3){ //when camera catch the item.
+boolean isItem2_1(final Camera camera3){ //when camera3 catch the item.
   final char caseContent2 = caseContent2(camera3);
-  return caseContent2 == '@';
+  return caseContent2 == 'A';
 }
 
-boolean isItem2_2(final Camera camera3){ //when camera catch the item.
+boolean isItem2_2(final Camera camera3){ //when camera3 catch the item.
   final char caseContent2 = caseContent2(camera3);
-  return caseContent2 == '^';
+  return caseContent2 == 'B';
 }
 
-boolean isEnd2(final Camera camera3){ //when camera approach to end point(S).
+boolean isEnd2(final Camera camera3){ //when camera3 approach to end point(S).
   final char caseContent2 = caseContent2(camera3);
   return caseContent2 == 'S';
  }
 /**
  * Returns the content of current case of the map.
  *
- * @param camera camera object
+ * @param camera3 camera3 object
  *
  * @return character of content of the current case of the map
  */
 char caseContent2(final Camera camera3) {
-  final int[] caseId= currentCase2(camera3);
-  return map2[caseId[0]][caseId[1]];
+  final int[] caseId2= currentCase2(camera3);
+  return map2[caseId2[0]][caseId2[1]];
 }
 
 /**
- * Returns the case (row & col) in which camera is currently situated.
+ * Returns the case (row & col) in which camera3 is currently situated.
  *
- * @param camera camera object
+ * @param camera3 camera3 object
  *
- * @return array with row & col in which camera currently situated
+ * @return array with row & col in which camera3 currently situated
  */
 int[] currentCase2(final Camera camera3) {
   final float[] position2 = camera3.position();

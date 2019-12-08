@@ -8,7 +8,7 @@ void settingPage() {
   noStroke();
   fill(255,255,255,150);
   rect(200, 250, width-400, height-300, 40);
-
+  println(mouseX,mouseY);
   
   // button
   stroke(255);
@@ -19,7 +19,7 @@ void settingPage() {
   // button click
   if (mousePressed) {
     if (homeBtn.click) {
-    page = 0;
+      page = 0;
     }
     else if (startGameBtn.click) {
       page = 1;

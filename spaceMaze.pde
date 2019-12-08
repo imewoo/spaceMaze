@@ -9,10 +9,10 @@ AudioPlayer bgm;
 float volume = 0;
 
 // camera: gamePage, camera2: mainPage
-Camera camera, camera2, camera3;
+Camera camera, camera2, camera3, camera5;
 
 final float CASE_SIZE = 10;  // size of one case 
-final float CAMERA_Y = -5;   // camera permanent attitude
+ float CAMERA_Y = -5;   // camera permanent attitude
 final float CAMERA_YY = -5;   // camera permanent attitude
 final float CAMERA_Z = 5;
 
@@ -49,13 +49,23 @@ int mm = min*3600;
 int ss = sec*60;
 int countDown = mm+ss;
 
-int count=2; //initialize count = 5;
+int count=5; //initialize count = 5;
+int count2=2;
 int a=1; //initialize item size ratio
 int b=1;
+int c=1;
+int d=1;
+int e=1;
+int aa=1;
+int bb=1;
 
-
-boolean flag = true;
-boolean flag2 = true;
+boolean flag1_1 = true;
+boolean flag1_2 = true;
+boolean flag1_3 = true;
+boolean flag1_4 = true;
+boolean flag1_5 = true;
+boolean flag3 = true;
+boolean flag4 = true;
 
 boolean selectflag=false;
 
@@ -87,6 +97,11 @@ timer timer4;
 timer timer5;
 timer timer6;
 
+float cameraX = 25;
+float cameraZ = 35;
+float camX;
+float camZ;
+
 void setup() {  
   fullScreen(P3D);
   
@@ -110,11 +125,11 @@ void setup() {
   // coordinate for the center of interest
   // component of the "up" direction vector
     camera2 = new Camera(this, width/2,height/2,900  ,width/2,height/2,0    ,0,0,0); //main camera //(eye, center, upVector)
-
   // setup camera // camera(eye, center, n)
     camera = new Camera(this, 25, 6*CAMERA_Y, 35); //25, -5, 30 //game camera
-    
     camera3 = new Camera(this, 25, 6*CAMERA_YY, 35); //30, -5, 30 //game camera
+    camera5 = new Camera(this, width/2,height/2,900  ,width/2,height/2,0    ,0,0,0);
+
     
  /************** Load map 1-stage from file *************/
   final String[] lines = loadStrings("default.map");
@@ -182,18 +197,18 @@ void setup() {
   timer6 = new timer(80,-70,49,0,0,PI/2);
   
   
-  //cameraflag = 0e -> maincamera(camera2) ON
-  //cameraflag = 1 -> gamecamera(camera) ON
-  //cameraflag = 2 -> gamecamera(camera3) ON
-  if(cameraflag == 0){
-    camera2.feed();
-  }
-  else if(cameraflag == 1){
-    camera.feed();
-  }
-  else if(cameraflag ==2){
-    camera3.feed();
-  }
+  ////cameraflag = 0e -> maincamera(camera2) ON
+  ////cameraflag = 1 -> gamecamera(camera) ON
+  ////cameraflag = 2 -> gamecamera(camera3) ON
+  //if(cameraflag == 0){
+  //  camera2.feed();
+  //}
+  //else if(cameraflag == 1){
+  //  camera.feed();
+  //}
+  //else if(cameraflag ==2){
+  //  camera3.feed();
+  //}
 }
 
 
@@ -205,9 +220,9 @@ void draw() {
   
   // mainPage
   if (page == 0) {
-    cameraflag=0;
-    //camera2.feed();
+    camera2.feed();
     mainPage();
+    //gamePage3();
   }
   
   // gamePage
@@ -236,9 +251,8 @@ void draw() {
   }
   
   else if (page == 6){
-    
     bgm.pause();
-    gamePage2();
+    gamePage3();
   }
   
 }
