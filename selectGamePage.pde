@@ -23,6 +23,7 @@ void selectGamePage() {
       exit();
     }
     else if (nextStageIcon.click) {
+      gameBGM.loop();
       page = 6;
     }
   }

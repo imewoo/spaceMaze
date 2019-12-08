@@ -6,8 +6,7 @@ void gamePage() {
   
   cameraflag=0;
   
-  
-  // star
+    // star
   camera2.feed();
   background(0);
   speed = 2;
@@ -16,13 +15,12 @@ void gamePage() {
       stars[i].update();
       stars[i].show();
   }
-  
-  // toolbar
-  noStroke();
-  fill(255,0,0);
+   
+  //// toolbar
+  //noStroke();
+  //fill(255,0,0);
   //rect(-width/2, -height/2, width, 100);
-  rect(-width/2, height/2, width, height);
-  println("mouse",mouseX,mouseY,width, height);
+  
 
   /* Navigate camera */
   if (keyPressed && key == CODED) {
@@ -87,9 +85,11 @@ void gamePage() {
           case 'C': drawItem3(); break;  //item 3
           case 'D': drawItem4(); break;  //item 4
           case 'E': drawItem5(); break;  //item 5
-          //case '%': drawEnemy();  break; //enemy
+          case '%': drawEnemy();  break; //enemy
           case 'S': drawEndPoint(); break; //end point
           case 'G': drawGround(); break; //ground
+          
+          case '@': drawEnemyPoint(); break;
           default: break;
         }
   
@@ -115,6 +115,24 @@ void gamePage() {
   pushMatrix();    timer4.draw();  popMatrix();
   pushMatrix();    timer5.draw();  popMatrix();
   pushMatrix();    timer6.draw();  popMatrix();  
+  
+  
+  pushMatrix();
+    // toolbar
+  noStroke();
+  fill(255,0,0);
+  //rect(-width/2, -height/2, width, 100);
+  //rect(-width/5, height/3 , width/5*2, 100);
+  rotateY(PI/2);
+  translate(0,-30,40);
+  translate(mouseX/10,0,0);
+  rect(0,0, 10,10);
+  //rect(radians(mouseX - pmouseX) / 6.0, radians(mouseY - pmouseY) / 6.0, 10, 10);
+   //camera.look(radians(mouseX - pmouseX) / 6.0, radians(mouseY - pmouseY) / 6.0);
+  println("mouse",mouseX,mouseY,width, height);
+  popMatrix();
+  
+  
 }
 
 // draw wall
@@ -144,7 +162,7 @@ void drawGround() {
   beginShape(QUADS); //rectangle
   //texture(WALL_TEXTURE);
   stroke(255); //line color = white
-  strokeWeight(10); // line size = 10
+  strokeWeight(5); // line size = 10
   
   vertex(0, 0, 0, 0, 0);
   vertex(CASE_SIZE, 0, 0, 1, 0);
@@ -165,6 +183,54 @@ void drawEndPoint() {
   vertex(0, 0, CASE_SIZE, 0, 1);
   endShape();
   noFill();
+}
+
+
+
+void drawEnemyPoint() {
+  println(count_enemy);
+  if(count_enemy <= 0){
+    beginShape(QUADS); //rectangle
+    stroke(255); //line color = white
+    strokeWeight(5); // line size = 10
+    vertex(0, 0, 0, 0, 0);
+    vertex(CASE_SIZE, 0, 0, 1, 0);
+    vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
+    vertex(0, 0, CASE_SIZE, 0, 1);
+    endShape();
+    noFill();
+   }else{
+      final Box box = new Box(this, CASE_SIZE);
+      box.drawMode(S3D.TEXTURE);
+      box.setTexture(WALL_TEXTURE);
+      
+      pushMatrix();
+      translate(CASE_SIZE/2, -CASE_SIZE/2, CASE_SIZE/2); // 20, -5, 5
+      noStroke();
+      //box.draw();
+      scale(0.05);
+      translate(0,0,30);
+      rotateX(PI);
+      //lights();
+      shape(s, 0, 0);  
+      popMatrix();
+    
+      noFill();
+     /*
+     beginShape(QUADS);
+    texture(GROUND_TEXTURE);
+    vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
+    vertex(CASE_SIZE, 0, 0, 1, 0);
+    vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
+    vertex(0, 0, CASE_SIZE, 0, 1);
+    endShape();
+    noFill();
+    */
+   }
+}
+
+void mouseClicked(){
+  count_enemy--;
 }
 
 /**
@@ -210,10 +276,10 @@ void drawEnemy(){
 }
 */
 
-/*
+
 void drawEnemy(){
   int enemySize=1;
-  if(isEnemy(camera)){ //eat item = count--;
+  if(isEnemy(camera)){
       enemySize*=0.5;
       println("end");
       
@@ -247,7 +313,7 @@ void drawEnemy(){
           noFill();
     }
 }
-*/
+
 
 void drawItem(){
   if(isItem(camera) && flag1_1 && mousePressed){ //eat item = count--;
@@ -264,9 +330,11 @@ void drawItem(){
       item.drawMode(Shape3D.TEXTURE);
       item.setRadius(a*CASE_SIZE / 4);
     
+      
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
-      rotateY(angle);
+      rotateY(angle * 4);
+      translate(CASE_SIZE / 12, 0, CASE_SIZE / 12); //center of block
       
     boolean flag2=true;
     item.draw();
@@ -492,25 +560,35 @@ boolean isAllowedCase(final Camera camera) { //if blank, 'S', 'F', '@', 'A' allo
   final char caseContent = caseContent(camera);
   //if user does not eat the item, end gate does not open
   if(count==0){
-  return caseContent == 'G'
-         || caseContent == 'S'
-         || caseContent == 'F'  
-         || caseContent == 'A'
-         || caseContent == 'B'
-         || caseContent == 'C'
-         || caseContent == 'D'
-         || caseContent == 'E'
-         || caseContent == '%'; //'%' is enemy
+      return caseContent == 'G'
+             || caseContent == 'S'
+             || caseContent == 'A'
+             || caseContent == 'B'
+             || caseContent == 'C'
+             || caseContent == 'D'
+             || caseContent == 'E'
+             || caseContent == '%'; //'%' is enemy
   }
   else{
-  return caseContent == 'G'
-         || caseContent == 'F'  
-         || caseContent == 'A'
-         || caseContent == 'B'
-         || caseContent == 'C'
-         || caseContent == 'D'
-         || caseContent == 'E'
-         || caseContent == '%'; //'%' is enemy
+    if(count_enemy<0){
+      return caseContent == 'G'
+             || caseContent == 'S'
+             || caseContent == 'A'
+             || caseContent == 'B'
+             || caseContent == 'C'
+             || caseContent == 'D'
+             || caseContent == 'E'
+             || caseContent == '%'
+             || caseContent == '@'; //'%' is enemy
+    }else{
+      return caseContent == 'G'  
+             || caseContent == 'A'
+             || caseContent == 'B'
+             || caseContent == 'C'
+             || caseContent == 'D'
+             || caseContent == 'E'
+             || caseContent == '%'; //'%' is enemy
+    }
   }
 }
 
@@ -539,6 +617,11 @@ boolean isItem5(final Camera camera){ //when camera catch the item.
 boolean isEnemy(final Camera camera){ //when camera catch the item.
   final char caseContent = caseContent(camera);
   return caseContent == '%';
+}
+
+boolean isEnemy_Ground(final Camera camera){ //when camera catch the item.
+  final char caseContent = caseContent(camera);
+  return caseContent == '@';
 }
 
 boolean isEnd(final Camera camera){ //when camera approach to end point(S).

@@ -4,7 +4,7 @@ void mainPage() {
   
   // title
   image(titleImg, width/2-500, -50, 1000, 400);
-  image(astronautImg, width/2-700, 300, 300, 620);
+  image(astronautImg, width-700, 320, 360, 600);
   
   // button
   startBtn.draw();
@@ -14,6 +14,7 @@ void mainPage() {
   // button click
   if (mousePressed) {
     if (startBtn.click) {
+      gameBGM.loop();
       page = 1;
     }
     else if (settingBtn.click) {

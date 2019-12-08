@@ -3,9 +3,13 @@ import ddf.minim.*;    //audio
 import damkjer.ocd.*;  //camera
 import shapes3d.*;     //3d
 
+PShape s;
+
 // audio
 Minim minim;
+Minim minim2;
 AudioPlayer bgm;
+AudioPlayer gameBGM;
 float volume = 0;
 
 // camera: gamePage, camera2: mainPage
@@ -20,7 +24,8 @@ Star[] stars = new Star[800];
 float speed; //star speed
 
 // image
-PImage titleImg, astronautImg;
+PImage titleImg, astronautImg, soundSettingImg, timeSettingImg;
+PImage moveBtnImg, qBtnImg, mouseMoveImg, mouseClickImg;
 /* Textures */
 PImage WALL_TEXTURE;
 PImage ENEMY_TEXTURE;
@@ -49,8 +54,11 @@ int mm = min*3600;
 int ss = sec*60;
 int countDown = mm+ss;
 
+
 int count=5; //initialize count = 5;
 int count2=2;
+int count_enemy=5;
+
 int a=1; //initialize item size ratio
 int b=1;
 int c=1;
@@ -82,6 +90,11 @@ Button guideBtnIcon;
 Button gameOverBtnIcon;
 Button selectGameBtnIcon;
 Button nextStageIcon;
+Button soundOnBtn;
+Button soundOffBtn;
+Button timeEasyBtn;
+Button timeNormalBtn;
+Button timeHardBtn;
 
 timerBox timerBox1;
 timerBox timerBox2;
@@ -105,6 +118,10 @@ float camZ;
 void setup() {  
   fullScreen(P3D);
   
+  // The file and all other data (extracted from the zip file) must be in the data folder
+  // of the current sketch to load successfully
+  s = loadShape("Trophy.obj"); 
+  
   // Star
   for (int i = 0; i < stars.length; i++) {
         stars[i] = new Star();
@@ -113,14 +130,26 @@ void setup() {
   // load Image
   titleImg = loadImage("spaceMaze.png");
   astronautImg = loadImage("astronaut.png");
+  soundSettingImg = loadImage("soundsetting.png");
+  timeSettingImg = loadImage("timesetting.png");
+  moveBtnImg = loadImage("moveButton.png");
+  qBtnImg = loadImage("qButton.png");
+  mouseMoveImg = loadImage("mouseMove.png");
+  mouseClickImg = loadImage("mouseLeftClick.png");
+
   
   // load Music
   minim = new Minim(this);
   bgm = minim.loadFile("Interstellar.mp3");
   bgm.loop();
   bgm.setGain(volume); 
+
+  minim2 = new Minim(this);
+  gameBGM = minim2.loadFile("TheDescent.mp3");
+  gameBGM.setGain(volume);
+
   
-  
+  // setup camera // camera(eye, center, n)
   // coordinate for the camera position
   // coordinate for the center of interest
   // component of the "up" direction vector
@@ -168,9 +197,9 @@ void setup() {
   //startBtn = new Button(width/2+420, height/2+120, 160, 60, "START", 70); //original
   //settingBtn = new Button(width/2+420, height/2+245, 160, 40, "Setting", 45); //original
   //guideBtn = new Button(width/2+420, height/2+350, 160, 40, "How To Use", 40); //original
-  startBtn = new Button(width/2+400, height/2+120, 160, 60, "START", 70);
-  settingBtn = new Button(width/2+400, height/2+245, 160, 40, "Setting", 45);
-  guideBtn = new Button(width/2+400, height/2+350, 160, 40, "How To Use", 40);
+  startBtn = new Button(width/2-400, height/2+80, 160, 60, "START", 70);
+  settingBtn = new Button(width/2-400, height/2+205, 160, 40, "Setting", 45);
+  guideBtn = new Button(width/2-400, height/2+310, 160, 40, "How To Use", 40);
   
   homeBtn = new Button(width-380, height/2+300, 130, 40, "Home", 45);
   exitBtn = new Button(width-380, height/2+300, 130, 40, "Exit", 45);
@@ -180,6 +209,14 @@ void setup() {
   gameOverBtnIcon = new Button(300, 250, 130, 45, "Game Over", 40);
   selectGameBtnIcon = new Button(300, 250, 130, 45, "Select Game", 40);
   nextStageIcon = new Button(width-380, height/2+200, 130, 40, "Next Stage", 40);
+  
+  // settingPage
+  soundOnBtn = new Button(width/2-100, height/2-100, 120, 40, "ON", 45);
+  soundOffBtn = new Button(width/2+300, height/2-100, 120, 40, "OFF", 45);
+  timeEasyBtn = new Button(width/2-150, height-350, 100, 40, "Easy", 45);
+  timeNormalBtn = new Button(width/2+100, height-350, 100, 40, "Normal", 45);
+  timeHardBtn = new Button(width/2+350, height-350, 100, 40, "Hard", 45);
+
   
   // timer
   timerBox1 = new timerBox(50,-70,50,PI/2,0,0);
@@ -229,6 +266,7 @@ void draw() {
   else if (page == 1) {
     cameraflag=1;
     bgm.pause();
+    //gameBGM.loop();
     gamePage();
   }
   
@@ -246,6 +284,7 @@ void draw() {
   
   // selectGamePage (someone who win the game has the choice whether go on or not)
   else if (page == 5){
+    gameBGM.pause();
     camera2.feed();
     selectGamePage();
   }
