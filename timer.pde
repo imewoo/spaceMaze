@@ -19,9 +19,18 @@ class timer {
     // countdown
     timer -= 1;
     if (timer <= 0) {
-      page = 0; // main page
+      page = 4; // Game over page
+      gameBGM.pause();
       bgm.loop();
-      timer = 36000;
+      if(time_mode == 0){ //easy
+         timer = 18000;
+      }
+      else if(time_mode == 1){ //normal
+         timer = 10800;
+      }
+      else if(time_mode == 2){ //hard
+         timer = 3600;
+      }
     }
     // draw timer
     translate(x, y, z);

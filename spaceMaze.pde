@@ -25,6 +25,7 @@ float speed; //star speed
 // image
 PImage titleImg, astronautImg, soundSettingImg, timeSettingImg;
 PImage moveBtnImg, qBtnImg, mouseMoveImg, mouseClickImg;
+PImage fireworkImg;
 
 /* Textures */
 PImage WALL_TEXTURE;
@@ -45,8 +46,6 @@ int page = 0; //0 = main page
               //4 = gameOver page
               //5 = selectGame page
               
-//int timer = 3600;
-int timer = 36000;
 //int timeron = 0;
 //int maxtimer = 3600;
 int min = minute();
@@ -55,6 +54,8 @@ int mm = min*3600;
 int ss = sec*60;
 int countDown = mm+ss;
 
+int time_mode = 1; //normal
+int timer = 10800;
 
 int count=5; //initialize count = 5;
 int count2=10;
@@ -138,6 +139,7 @@ void setup() {
   mouseMoveImg = loadImage("mouseMove.png");
   mouseClickImg = loadImage("mouseLeftClick.png");
 
+  fireworkImg = loadImage("firework.png");
   
   // load Music
   minim = new Minim(this);
@@ -148,6 +150,18 @@ void setup() {
   minim2 = new Minim(this);
   gameBGM = minim2.loadFile("TheDescent.mp3");
   gameBGM.setGain(volume);
+  
+  
+  //time setting
+  if(time_mode == 0){ //easy
+     timer = 18000;
+  }
+  else if(time_mode == 1){ //normal
+     timer = 10800;
+  }
+  else if(time_mode == 2){ //hard
+     timer = 3600;
+  }
 
   
   // setup camera // camera(eye, center, n)
@@ -216,7 +230,7 @@ void setup() {
   guideBtn = new Button(width/2-400, height/2+310, 160, 40, "How To Use", 40);
   
   homeBtn = new Button(width-380, height/2+300, 130, 40, "Home", 45);
-  exitBtn = new Button(width-380, height/2+300, 130, 40, "Exit", 45);
+  exitBtn = new Button(width-380, height/2+400, 130, 40, "Exit", 45);
   startGameBtn = new Button(width-380, height/2+400, 130, 40, "Game Start", 40);
   settingBtnIcon = new Button(300, 250, 130, 45, "Setting", 45);
   guideBtnIcon = new Button(300, 250, 130, 45, "How To Use", 40);
@@ -270,8 +284,6 @@ void draw() {
     cameraflag=1;
     bgm.pause();
     gamePage();
-  
-      
   }
   
   // settingPage
@@ -282,6 +294,11 @@ void draw() {
   // guidePage(how to use page)
   else if (page == 3) {
     guidePage();
+  }
+  
+  // Game Over Page
+  else if (page == 4) {
+    gameOverPage();
   }
   
   // selectGamePage (someone who win the game has the choice whether go on or not)

@@ -33,6 +33,7 @@ void settingPage() {
       page = 0;
     }
     else if (startGameBtn.click) {
+      gameBGM.loop();
       page = 1;
     }
     else if(soundOnBtn.click){
@@ -44,13 +45,16 @@ void settingPage() {
        gameBGM.mute();
     }
      else if(timeEasyBtn.click){
-       timer = 54000;
+       time_mode = 0;
+       timer = 18000;
     }
      else if(timeNormalBtn.click){
-       timer = 36000;
+       time_mode = 1;
+       timer = 10800;
     }
      else if(timeHardBtn.click){
-       timer = 18000;
+       time_mode = 2;
+       timer = 3600;
     }
   }
   
