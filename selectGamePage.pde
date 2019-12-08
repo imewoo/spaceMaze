@@ -23,10 +23,17 @@ void selectGamePage() {
       exit();
     }
     else if (nextStageIcon.click) {
-
-    gameBGM.loop();
-
-      page = 6;
+      gameBGM.loop();
+      if(mapflag==1){
+        mapflag=2;
+      }
+      else if(mapflag==2){
+        mapflag=3;
+      }
+      else if(mapflag==3){
+        mapflag=1;
+      }
+      page = 1;
     }
   }
   

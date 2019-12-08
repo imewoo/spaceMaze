@@ -5,6 +5,7 @@ float scale=1;
 int abc=1;
 boolean abc_flag=true;
 
+
 void gamePage() {
  
    x++;
@@ -27,7 +28,7 @@ void gamePage() {
   cameraflag=0;
   
   
-    // star
+  // star
   camera2.feed();
   background(0);
   speed = 2;
@@ -37,23 +38,10 @@ void gamePage() {
       stars[i].show();
   }
    
-  //// toolbar
-  //noStroke();
-  //fill(255,0,0);
-  //rect(-width/2, -height/2, width, 100);
-
-  
-
-
   float[] position = camera.position();
-  
- 
-    
+      
   /* Navigate camera */
   if (keyPressed && key == CODED) {
-
-  
-    
     
     switch (keyCode) {
       case UP:        onStepForward(camera);        break;
@@ -114,7 +102,7 @@ void gamePage() {
           case 'C': drawItem3(); break;  //item 3
           case 'D': drawItem4(); break;  //item 4
           case 'E': drawItem5(); break;  //item 5
-          case '%': drawEnemy();  break; //enemy
+          //case '%': drawEnemy();  break; //enemy
           case 'S': drawEndPoint(); break; //end point
           case 'G': drawGround(); break; //ground
           
@@ -146,7 +134,7 @@ void gamePage() {
           case 'C': drawItem3(); break;  //item 3
           case 'D': drawItem4(); break;  //item 4
           case 'E': drawItem5(); break;  //item 5
-          case '%': drawEnemy();  break; //enemy
+          //case '%': drawEnemy();  break; //enemy
           case 'S': drawEndPoint(); break; //end point
           case 'G': drawGround(); break; //ground
           
@@ -178,7 +166,7 @@ void gamePage() {
           case 'C': drawItem3(); break;  //item 3
           case 'D': drawItem4(); break;  //item 4
           case 'E': drawItem5(); break;  //item 5
-          case '%': drawEnemy();  break; //enemy
+          //case '%': drawEnemy();  break; //enemy
           case 'S': drawEndPoint(); break; //end point
           case 'G': drawGround(); break; //ground
           
@@ -208,25 +196,7 @@ void gamePage() {
   pushMatrix();    timer4.draw();  popMatrix();
   pushMatrix();    timer5.draw();  popMatrix();
   pushMatrix();    timer6.draw();  popMatrix();  
-
   
-  
-  pushMatrix();
-    // toolbar
-  noStroke();
-  fill(255,0,0);
-  //rect(-width/2, -height/2, width, 100);
-  //rect(-width/5, height/3 , width/5*2, 100);
-  rotateY(PI/2);
-  translate(0,-30,40);
-  translate(mouseX/10,0,0);
-  rect(0,0, 10,10);
-  //rect(radians(mouseX - pmouseX) / 6.0, radians(mouseY - pmouseY) / 6.0, 10, 10);
-   //camera.look(radians(mouseX - pmouseX) / 6.0, radians(mouseY - pmouseY) / 6.0);
-  println("mouse",mouseX,mouseY,width, height);
-  popMatrix();
-  
-
 }
 
 // draw wall
@@ -266,26 +236,36 @@ void drawGround() {
   noFill();
 }
 
-
 void drawEndPoint() {
-  beginShape(QUADS);  
-  texture(GROUND_TEXTURE);
-  vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
-  vertex(CASE_SIZE, 0, 0, 1, 0);
-  vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
-  vertex(0, 0, CASE_SIZE, 0, 1);
-  endShape();
-  noFill();
+  if(count==5){
+    beginShape(QUADS);  
+    texture(GROUND_TEXTURE);
+    vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
+    vertex(CASE_SIZE, 0, 0, 1, 0);
+    vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
+    vertex(0, 0, CASE_SIZE, 0, 1);
+    endShape();
+    noFill();
+  }else{
+    beginShape(QUADS);  
+    vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
+    vertex(CASE_SIZE, 0, 0, 1, 0);
+    vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
+    vertex(0, 0, CASE_SIZE, 0, 1);
+    endShape();
+    noFill();
+  }
 }
-
-
 
 void drawEnemyPoint() {
  
   if(abc>=15){
     if(abc>15 && abc<25 && !abc_flag){
       beginShape(QUADS);  
-      texture(GROUND_TEXTURE);
+      stroke(255); //line color = white
+      strokeWeight(5); // line size = 10
+      fill(0,0,255);
+      //texture(GROUND_TEXTURE);
       vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
       vertex(CASE_SIZE, 0, 0, 1, 0);
       vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
@@ -306,20 +286,33 @@ void drawEnemyPoint() {
      }
    }
    
-   else if(abc<15){
-      final Box box = new Box(this, CASE_SIZE);
-      box.drawMode(S3D.TEXTURE);
-      box.setTexture(WALL_TEXTURE);
+   else if(abc<20){
+      beginShape(QUADS); //rectangle
+      stroke(255); //line color = white
+      strokeWeight(5); // line size = 10
+      vertex(0, 0, 0, 0, 0);
+      vertex(CASE_SIZE, 0, 0, 1, 0);
+      vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
+      vertex(0, 0, CASE_SIZE, 0, 1);
+      endShape();
+      noFill();
       
+      
+      
+      float y=cos(x+0.1);  
       pushMatrix();
-      translate(CASE_SIZE/2, -CASE_SIZE/2, CASE_SIZE/2); // 20, -5, 5
-      noStroke();
-      //box.draw();
+      translate((-CASE_SIZE / 2) +10, -CASE_SIZE / 2, (y*CASE_SIZE / 6)+5); //center of block
+      
+      //translate(CASE_SIZE/2, -CASE_SIZE/2, CASE_SIZE/2); // 20, -5, 5
+
       scale(0.05);
-      translate(0,0,30);
+      translate(0,25,0);
       rotateX(PI);
+      rotateZ(PI/6);
+      rotateY(PI/2);
+      //rotateZ(PI/2*3);
       //lights();
-      shape(s, 0, 0);  
+      shape(Spider, 0, 0); 
       popMatrix();
     
       noFill();
@@ -327,82 +320,41 @@ void drawEnemyPoint() {
    }
 }
 
-/**
- * Draws sphere in current case.
- */
-void drawSphere() {
-  pushMatrix();
-  translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2);
-  sphere(CASE_SIZE / 2);
-  popMatrix();
-}
-
-
-
-void drawEnemy(){
-  int enemySize=1;
-  if(isEnemy(camera)){
-      enemySize*=0.5;
-      //println("end");
-      
-    }
-    
-    else{
-          final Ellipsoid item = new Ellipsoid(this, 20, 30);
-          item.setTexture(ENEMY_TEXTURE);
-          item.drawMode(Shape3D.TEXTURE);
-          item.setRadius(enemySize*CASE_SIZE / 6);
-        
-          pushMatrix();
-          translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
-          //rotateY(angle);
-          //scale(scale);
-
-        item.draw();
-          if(scale < 1.5){
-            scale = scale+ (scale/10);
-          }else if(scale == 1.5){
-            scale = scale - (scale/10);
-          }
-          else{
-            scale=1.0;
-          }
-          
-          //scale++;
-    
-          popMatrix();
-          
-          noFill();
-    }
-}
-
 
 void drawItem(){
   if(isItem(camera) && flag1_1 && mousePressed){ //eat item = count++;
       drawItemCheck();
-      a=a/2;
+      a=0;
       count++; //initialized count = 5
       flag1_1 =false;
       println(flag1_1);
     }
     
     else{
-      final Ellipsoid item = new Ellipsoid(this, 20, 30);
-      item.setTexture(ITEM_TEXTURE);
-      item.drawMode(Shape3D.TEXTURE);
-      item.setRadius(a*CASE_SIZE / 4);
-      
-      
+      beginShape(QUADS); //rectangle
+      stroke(255); //line color = white
+      strokeWeight(5); // line size = 10
+      vertex(0, 0, 0, 0, 0);
+      vertex(CASE_SIZE, 0, 0, 1, 0);
+      vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
+      vertex(0, 0, CASE_SIZE, 0, 1);
+      endShape();
+      noFill();
+
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
-      rotateY(angle * 4);
+      rotateY(angle*4);
+      translate(2,3,0);
       translate(CASE_SIZE / 12, 0, CASE_SIZE / 12); //center of block
       
     boolean flag2=true;
-    item.draw();
+    //item.draw();
+    scale(a*0.15);
+    rotateX(PI/3);
+    shape(Heart, 0, 0); 
       //for game optimization
-      if(angle < 6){
-        angle++;
+      if(angle < 7){
+        angle ++;
       }else{
         angle=0;
       }
@@ -419,23 +371,32 @@ void drawItem2(){
 
     if(isItem2(camera) && flag1_2 && mousePressed){ //eat item = count++;
       drawItemCheck();
-      b=b/2;
+      b=0;
       count++; //initialized count = 5
       flag1_2 = false;
     }
     
     else{
-      final Ellipsoid item2 = new Ellipsoid(this, 20, 30);
-      //final Ellipsoid item2 = new Ellipsoid(this, 20, 30);
-      item2.setTexture(ITEM_TEXTURE);
-      item2.drawMode(Shape3D.TEXTURE);
-      item2.setRadius(b*CASE_SIZE / 4);
-    
-      float y=cos(x+0.1);
+
+   
+      beginShape(QUADS); //rectangle
+      stroke(255); //line color = white
+      strokeWeight(5); // line size = 10
+      vertex(0, 0, 0, 0, 0);
+      vertex(CASE_SIZE, 0, 0, 1, 0);
+      vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
+      vertex(0, 0, CASE_SIZE, 0, 1);
+      endShape();
+      noFill();
+      
+      float y=cos(x+0.1);  
       pushMatrix();
       translate((y*CASE_SIZE / 6)+5, -CASE_SIZE / 2, (y*CASE_SIZE / 6)+5); //center of block
       rotateY(angle);
-      item2.draw();
+      //item2.draw();
+      scale(b*0.2);
+      rotateX(PI/2);
+      shape(Heart,0,0);
       
       //for game optimization
       if(angle < 6){
@@ -456,27 +417,32 @@ void drawItem3(){
 
     if(isItem3(camera) && flag1_3 && mousePressed){ //eat item = count++;
       drawItemCheck();
-      c=c/2;
+      c=0;
       count++; //initialized count = 5
       flag1_3 = false;
     }
     
     else{
-      final Ellipsoid item3 = new Ellipsoid(this, 20, 30);
-      //final Ellipsoid item2 = new Ellipsoid(this, 20, 30);
-      item3.setTexture(ITEM_TEXTURE);
-      item3.drawMode(Shape3D.TEXTURE);
-      item3.setRadius(c*CASE_SIZE / 4);
+      beginShape(QUADS); //rectangle
+      stroke(255); //line color = white
+      strokeWeight(5); // line size = 10
+      vertex(0, 0, 0, 0, 0);
+      vertex(CASE_SIZE, 0, 0, 1, 0);
+      vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
+      vertex(0, 0, CASE_SIZE, 0, 1);
+      endShape();
+      noFill();
       
       float y=cos(x+0.1);
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
       scale(cos(y)/2);
       println(cos(y));
-      
+      rotateX(PI/2);
       rotateY(angle);
-      item3.draw();
-      
+      //item3.draw();
+      scale(0.2*c);
+      shape(Heart, 0, 0);
       //for game optimization
       if(angle < 6){
         angle++;
@@ -495,23 +461,29 @@ void drawItem4(){
 
     if(isItem4(camera) && flag1_4 && mousePressed){ //eat item = count++;
       drawItemCheck();
-      d=d/2;
+      d=0;
       count++; //initialized count = 5
       flag1_4 = false;
     }
     
     else{
-      final Ellipsoid item4 = new Ellipsoid(this, 20, 30);
-      //final Ellipsoid item2 = new Ellipsoid(this, 20, 30);
-      item4.setTexture(ITEM_TEXTURE);
-      item4.drawMode(Shape3D.TEXTURE);
-      item4.setRadius(d*CASE_SIZE / 4);
-    
+      beginShape(QUADS); //rectangle
+      stroke(255); //line color = white
+      strokeWeight(5); // line size = 10
+      vertex(0, 0, 0, 0, 0);
+      vertex(CASE_SIZE, 0, 0, 1, 0);
+      vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
+      vertex(0, 0, CASE_SIZE, 0, 1);
+      endShape();
+      noFill();
+      
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
       rotateY(angle);
-      item4.draw();
-      
+      //item4.draw();
+      rotateX(PI/2);
+      scale(0.2*d);
+      shape(Heart,0,0);
       //for game optimization
       if(angle < 6){
         angle++;
@@ -530,23 +502,29 @@ void drawItem5(){
 
     if(isItem5(camera) && flag1_5 && mousePressed){ //eat item = count++;
       drawItemCheck();
-      e=e/2;
+      e=0;
       count++; //initialized count = 5
       flag1_5 = false;
     }
     
     else{
-      final Ellipsoid item5 = new Ellipsoid(this, 20, 30);
-      //final Ellipsoid item2 = new Ellipsoid(this, 20, 30);
-      item5.setTexture(ITEM_TEXTURE);
-      item5.drawMode(Shape3D.TEXTURE);
-      item5.setRadius(e*CASE_SIZE / 4);
-    
+      beginShape(QUADS); //rectangle
+      stroke(255); //line color = white
+      strokeWeight(5); // line size = 10
+      vertex(0, 0, 0, 0, 0);
+      vertex(CASE_SIZE, 0, 0, 1, 0);
+      vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
+      vertex(0, 0, CASE_SIZE, 0, 1);
+      endShape();
+      noFill();
+      
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
       rotateY(angle);
-      item5.draw();
-      
+      rotateX(PI/3);
+      scale(0.2*e);
+      //item5.draw();
+      shape(Heart,0,0);
       //for game optimization
       if(angle < 6){
         angle++;

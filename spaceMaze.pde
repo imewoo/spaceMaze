@@ -3,6 +3,8 @@ import ddf.minim.*;    //audio
 import damkjer.ocd.*;  //camera
 import shapes3d.*;     //3d
 
+PShape Robot, Heart, Spider;
+
 // audio
 Minim minim;
 Minim minim2;
@@ -44,7 +46,7 @@ int page = 0; //0 = main page
               //3 = how to use page(guide button)
               //4 = gameOver page
               //5 = selectGame page
-              
+             
 //int timer = 3600;
 int timer = 36000;
 //int timeron = 0;
@@ -56,7 +58,7 @@ int ss = sec*60;
 int countDown = mm+ss;
 
 
-int count=5; //initialize count = 5;
+int count=0; //initialize count = 5;
 int count2=10;
 
 int a=1; //initialize item size ratio
@@ -123,6 +125,8 @@ int mapflag=1;
 void setup() {  
   fullScreen(P3D);
   
+  Heart = loadShape("12190_Heart_v1_L3.obj");
+  Spider = loadShape("Trophy.obj");
   // Star
   for (int i = 0; i < stars.length; i++) {
         stars[i] = new Star();
@@ -240,13 +244,19 @@ void setup() {
   timerBox5 = new timerBox(80,-70,80,0,0,PI/2);
   timerBox6 = new timerBox(80,-70,50,0,0,PI/2);
   
+  //timer1 = new timer(50,-70,50,PI/2,0,0);
+  //timer2 = new timer(50,-39,50,PI/2,0,0);
+  //timer3 = new timer(81,-70,80,0,PI/2,0);
+  //timer4 = new timer(49,-70,80,0,PI/2,0);
+  //timer5 = new timer(80,-70,81,0,0,PI/2);
+  //timer6 = new timer(80,-70,49,0,0,PI/2);
   timer1 = new timer(50,-70,50,PI/2,0,0);
-  timer2 = new timer(50,-39,50,PI/2,0,0);
+  timer2 = new timer(50,-39,50,PI/2,PI,PI/2);
   timer3 = new timer(81,-70,80,0,PI/2,0);
-  timer4 = new timer(49,-70,80,0,PI/2,0);
-  timer5 = new timer(80,-70,81,0,0,PI/2);
-  timer6 = new timer(80,-70,49,0,0,PI/2);
-  
+  timer4 = new timer(49,-70,50,0,PI/2*3,0);
+  //timer4 = new timer(80,-70,49,0,PI,PI);
+  timer5 = new timer(80,-70,81,PI,0,PI);
+  timer6 = new timer(80,-70,49,PI,0,PI);
 
 }
 

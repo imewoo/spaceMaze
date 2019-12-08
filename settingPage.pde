@@ -44,13 +44,13 @@ void settingPage() {
        gameBGM.mute();
     }
      else if(timeEasyBtn.click){
-       timer = 54000;
+       timer = 18000; // 5 minutes
     }
      else if(timeNormalBtn.click){
-       timer = 36000;
+       timer = 10800; // 3 minutes
     }
      else if(timeHardBtn.click){
-       timer = 18000;
+       timer = 3600; // 1 minutes
     }
   }
   
