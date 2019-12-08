@@ -1,44 +1,36 @@
 // page = 1
-int timeCount=0; //time count
-int die_timeCount=0; //if game end, timecount remain
-
-int frameConstant=300; //initialize fps
-int game_end_confirm=1; //set end
-float delta = 0.0f ;
-
 float angle = 0;
-float aVelocity = 0;
-float aAcceleration = 0.001;
+float scale=1;
 
 void gamePage() {
-  // star
+  
+  cameraflag=0;
+  
+    // star
+  camera2.feed();
   background(0);
   speed = 2;
   translate(width/2, height/2, 0);
-  //translate(mouseX, mouseY,0);
   for (int i = 0; i < stars.length; i++) {
       stars[i].update();
       stars[i].show();
   }
+   
+  // toolbar
+  noStroke();
+  fill(255,0,0);
+  rect(-width/2, -height/2, width, 100);
   
-  
+
   /* Navigate camera */
   if (keyPressed && key == CODED) {
-    final float[] position = camera.position();
+     float[] position = camera.position();
     
     switch (keyCode) {
-      case UP:
-        onStepForward(camera);
-        break;
-      case DOWN:
-        onStepBackward(camera);
-        break;
-      case LEFT:
-        onStepLeft(camera);
-        break;
-      case RIGHT:
-        onStepRight(camera);
-        break;
+      case UP:        onStepForward(camera);        break;
+      case DOWN:        onStepBackward(camera);        break;
+      case LEFT:        onStepLeft(camera);        break;
+      case RIGHT:        onStepRight(camera);        break;
     }
     
     /* If we are in non allowed area (wall, tree or water) cancel the movement */
@@ -57,17 +49,25 @@ void gamePage() {
     //In this case, 'S' is the end point.
     if(count==0 && isEnd(camera)){ 
       selectflag=true;
+      
+      camX = position[0];
+      camZ = position[2];
+      CAMERA_Y = -5;
+     
      page = 5; // selectGamePage
      bgm.loop();
     }
     
-    println(count);
+    //println(count);
   }
   
   
-  /* Pose camera */ 
+    /* Pose camera */ 
   camera.feed();
-    
+  
+  
+  
+  
     
   /* Draw map */
     for (int row = 0; row < map.length; row++) {
@@ -80,10 +80,12 @@ void gamePage() {
         
         switch (map[row][col]) {
           case '#': drawWall(); break; //wall 
-          case '@': drawItem(); break; //item 1
-          case '^': drawItem2(); break;  //item 2
-          case '%': //drawEnemy();
-            break; //enemy
+          case 'A': drawItem(); break; //item 1
+          case 'B': drawItem2(); break;  //item 2
+          case 'C': drawItem3(); break;  //item 3
+          case 'D': drawItem4(); break;  //item 4
+          case 'E': drawItem5(); break;  //item 5
+          case '%': drawEnemy();  break; //enemy
           case 'S': drawEndPoint(); break; //end point
           case 'G': drawGround(); break; //ground
           default: break;
@@ -97,44 +99,20 @@ void gamePage() {
     
     
   // draw timerBox
-  pushMatrix();
-    timerBox1.draw();
-  popMatrix();
-  pushMatrix();
-    timerBox2.draw();
-  popMatrix();
-  pushMatrix();
-    timerBox3.draw();
-  popMatrix();
-  pushMatrix();
-    timerBox4.draw();
-  popMatrix();
-  pushMatrix();
-    timerBox5.draw();
-  popMatrix();
-  pushMatrix();
-    timerBox6.draw();
-  popMatrix();
+  pushMatrix();    timerBox1.draw();  popMatrix();
+  pushMatrix();    timerBox2.draw();  popMatrix();
+  pushMatrix();    timerBox3.draw();  popMatrix();
+  pushMatrix();    timerBox4.draw();  popMatrix();
+  pushMatrix();    timerBox5.draw();  popMatrix();
+  pushMatrix();    timerBox6.draw();  popMatrix();
   
   // draw timer
-  pushMatrix();
-    timer1.draw();
-  popMatrix();
-  pushMatrix();
-    timer2.draw();
-  popMatrix();
-  pushMatrix();
-    timer3.draw();
-  popMatrix();
-  pushMatrix();
-    timer4.draw();
-  popMatrix();
-  pushMatrix();
-    timer5.draw();
-  popMatrix();
-  pushMatrix();
-    timer6.draw();
-  popMatrix();  
+  pushMatrix();    timer1.draw();  popMatrix();
+  pushMatrix();    timer2.draw();  popMatrix();
+  pushMatrix();    timer3.draw();  popMatrix();
+  pushMatrix();    timer4.draw();  popMatrix();
+  pushMatrix();    timer5.draw();  popMatrix();
+  pushMatrix();    timer6.draw();  popMatrix();  
 }
 
 // draw wall
@@ -198,6 +176,8 @@ void drawSphere() {
 }
 
 
+
+/**********This is big enemy moving around the map*****************/
 /*
 void drawEnemy(){
   final Ellipsoid enemy = new Ellipsoid(this, 20, 30);
@@ -228,13 +208,52 @@ void drawEnemy(){
 }
 */
 
+
+void drawEnemy(){
+  int enemySize=1;
+  if(isEnemy(camera)){ //eat item = count--;
+      enemySize*=0.5;
+      println("end");
+      
+    }
+    
+    else{
+          final Ellipsoid item = new Ellipsoid(this, 20, 30);
+          item.setTexture(ENEMY_TEXTURE);
+          item.drawMode(Shape3D.TEXTURE);
+          item.setRadius(enemySize*CASE_SIZE / 6);
+        
+          pushMatrix();
+          translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
+          //rotateY(angle);
+          //scale(scale);
+
+        item.draw();
+          if(scale < 1.5){
+            scale = scale+ (scale/10);
+          }else if(scale == 1.5){
+            scale = scale - (scale/10);
+          }
+          else{
+            scale=1.0;
+          }
+          
+          //scale++;
+    
+          popMatrix();
+          
+          noFill();
+    }
+}
+
+
 void drawItem(){
-  if(isItem(camera) && flag && mousePressed){ //eat item = count--;
+  if(isItem(camera) && flag1_1 && mousePressed){ //eat item = count--;
       drawItemCheck();
       a=a/2;
       count--; //initialized count = 5
-      flag =false;
-      println(flag);
+      flag1_1 =false;
+      println(flag1_1);
     }
     
     else{
@@ -243,9 +262,11 @@ void drawItem(){
       item.drawMode(Shape3D.TEXTURE);
       item.setRadius(a*CASE_SIZE / 4);
     
+      
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
       rotateY(angle);
+      translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
       
     boolean flag2=true;
     item.draw();
@@ -257,13 +278,7 @@ void drawItem(){
       }
       
       angle++;
-      //aVelocity = aVelocity + aAcceleration;
-      //angle = angle + aVelocity;
-      
-      /*
-      if(angle>50){
-        aVelocity *= -1;
-      }*/
+     
       popMatrix();
       
       noFill();
@@ -272,11 +287,11 @@ void drawItem(){
 
 void drawItem2(){
 
-    if(isItem2(camera) && flag2 && mousePressed){ //eat item = count--;
+    if(isItem2(camera) && flag1_2 && mousePressed){ //eat item = count--;
       drawItemCheck();
       b=b/2;
       count--; //initialized count = 5
-      flag2 = false;
+      flag1_2 = false;
     }
     
     else{
@@ -306,6 +321,112 @@ void drawItem2(){
     }
 }
 
+void drawItem3(){
+
+    if(isItem3(camera) && flag1_3 && mousePressed){ //eat item = count--;
+      drawItemCheck();
+      c=c/2;
+      count--; //initialized count = 5
+      flag1_3 = false;
+    }
+    
+    else{
+      final Ellipsoid item3 = new Ellipsoid(this, 20, 30);
+      //final Ellipsoid item2 = new Ellipsoid(this, 20, 30);
+      item3.setTexture(ITEM_TEXTURE);
+      item3.drawMode(Shape3D.TEXTURE);
+      item3.setRadius(c*CASE_SIZE / 4);
+    
+      pushMatrix();
+      translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
+      rotateY(angle);
+      item3.draw();
+      
+      //for game optimization
+      if(angle < 6){
+        angle++;
+      }else{
+        angle=0;
+      }
+      
+      angle++;
+    
+      popMatrix();
+    
+      noFill();
+    }
+}
+void drawItem4(){
+
+    if(isItem4(camera) && flag1_4 && mousePressed){ //eat item = count--;
+      drawItemCheck();
+      d=d/2;
+      count--; //initialized count = 5
+      flag1_4 = false;
+    }
+    
+    else{
+      final Ellipsoid item4 = new Ellipsoid(this, 20, 30);
+      //final Ellipsoid item2 = new Ellipsoid(this, 20, 30);
+      item4.setTexture(ITEM_TEXTURE);
+      item4.drawMode(Shape3D.TEXTURE);
+      item4.setRadius(d*CASE_SIZE / 4);
+    
+      pushMatrix();
+      translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
+      rotateY(angle);
+      item4.draw();
+      
+      //for game optimization
+      if(angle < 6){
+        angle++;
+      }else{
+        angle=0;
+      }
+      
+      angle++;
+    
+      popMatrix();
+    
+      noFill();
+    }
+}
+void drawItem5(){
+
+    if(isItem5(camera) && flag1_5 && mousePressed){ //eat item = count--;
+      drawItemCheck();
+      e=e/2;
+      count--; //initialized count = 5
+      flag1_5 = false;
+    }
+    
+    else{
+      final Ellipsoid item5 = new Ellipsoid(this, 20, 30);
+      //final Ellipsoid item2 = new Ellipsoid(this, 20, 30);
+      item5.setTexture(ITEM_TEXTURE);
+      item5.drawMode(Shape3D.TEXTURE);
+      item5.setRadius(e*CASE_SIZE / 4);
+    
+      pushMatrix();
+      translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
+      rotateY(angle);
+      item5.draw();
+      
+      //for game optimization
+      if(angle < 6){
+        angle++;
+      }else{
+        angle=0;
+      }
+      
+      angle++;
+    
+      popMatrix();
+    
+      noFill();
+    }
+}
+
 
 void drawItemCheck(){
   beginShape(QUADS);
@@ -318,11 +439,7 @@ void drawItemCheck(){
   noFill();
 }
 
-// TODO: remake it
-//6.0 -> 1 circle moved.
-void mouseMoved() {
-  camera.look(radians(mouseX - pmouseX) / 6.0, radians(mouseY - pmouseY) / 6.0);
-}
+
 
 /**
  * Handler of command to move camera forward.
@@ -371,32 +488,57 @@ void onStepRight(final Camera camera) {
  *
  * @return true - camera is in allowed map case, false - not.
  */
-boolean isAllowedCase(final Camera camera) { //if blank, 'S', 'F', '@', '^' allowed to go!
+boolean isAllowedCase(final Camera camera) { //if blank, 'S', 'F', '@', 'A' allowed to go!
   final char caseContent = caseContent(camera);
   //if user does not eat the item, end gate does not open
   if(count==0){
   return caseContent == 'G'
          || caseContent == 'S'
          || caseContent == 'F'  
-         || caseContent == '@'
-         || caseContent == '^';
+         || caseContent == 'A'
+         || caseContent == 'B'
+         || caseContent == 'C'
+         || caseContent == 'D'
+         || caseContent == 'E'
+         || caseContent == '%'; //'%' is enemy
   }
   else{
   return caseContent == 'G'
          || caseContent == 'F'  
-         || caseContent == '@'
-         || caseContent == '^';
+         || caseContent == 'A'
+         || caseContent == 'B'
+         || caseContent == 'C'
+         || caseContent == 'D'
+         || caseContent == 'E'
+         || caseContent == '%'; //'%' is enemy
   }
 }
 
 boolean isItem(final Camera camera){ //when camera catch the item.
   final char caseContent = caseContent(camera);
-  return caseContent == '@';
+  return caseContent == 'A';
 }
 
 boolean isItem2(final Camera camera){ //when camera catch the item.
   final char caseContent = caseContent(camera);
-  return caseContent == '^';
+  return caseContent == 'B';
+}
+boolean isItem3(final Camera camera){ //when camera catch the item.
+  final char caseContent = caseContent(camera);
+  return caseContent == 'C';
+}
+boolean isItem4(final Camera camera){ //when camera catch the item.
+  final char caseContent = caseContent(camera);
+  return caseContent == 'D';
+}
+boolean isItem5(final Camera camera){ //when camera catch the item.
+  final char caseContent = caseContent(camera);
+  return caseContent == 'E';
+}
+
+boolean isEnemy(final Camera camera){ //when camera catch the item.
+  final char caseContent = caseContent(camera);
+  return caseContent == '%';
 }
 
 boolean isEnd(final Camera camera){ //when camera approach to end point(S).
