@@ -25,7 +25,10 @@ float speed; //star speed
 // image
 PImage titleImg, astronautImg, soundSettingImg, timeSettingImg;
 PImage moveBtnImg, qBtnImg, mouseMoveImg, mouseClickImg;
+<<<<<<< HEAD:spaceMaze4.pde
 
+=======
+>>>>>>> 6739e12f1acfe2e7262194e386d6812f894b3dbb:spaceMaze.pde
 /* Textures */
 PImage WALL_TEXTURE;
 PImage ENEMY_TEXTURE;
@@ -54,8 +57,12 @@ int mm = min*3600;
 int ss = sec*60;
 int countDown = mm+ss;
 
+<<<<<<< HEAD:spaceMaze4.pde
 int count=5; //initialize count = 5;
 int count2=2;
+=======
+int count=0; //initialize count = 5;
+>>>>>>> 6739e12f1acfe2e7262194e386d6812f894b3dbb:spaceMaze.pde
 int a=1; //initialize item size ratio
 int b=1;
 int c=1;
@@ -91,6 +98,10 @@ Button soundOffBtn;
 Button timeEasyBtn;
 Button timeNormalBtn;
 Button timeHardBtn;
+<<<<<<< HEAD:spaceMaze4.pde
+=======
+
+>>>>>>> 6739e12f1acfe2e7262194e386d6812f894b3dbb:spaceMaze.pde
 
 timerBox timerBox1;
 timerBox timerBox2;
@@ -129,7 +140,11 @@ void setup() {
   qBtnImg = loadImage("qButton.png");
   mouseMoveImg = loadImage("mouseMove.png");
   mouseClickImg = loadImage("mouseLeftClick.png");
+<<<<<<< HEAD:spaceMaze4.pde
   
+=======
+
+>>>>>>> 6739e12f1acfe2e7262194e386d6812f894b3dbb:spaceMaze.pde
   
   // load Music
   minim = new Minim(this);
@@ -137,11 +152,24 @@ void setup() {
   bgm.loop();
   bgm.setGain(volume); 
   
+<<<<<<< HEAD:spaceMaze4.pde
   minim2 = new Minim(this);
   gameBGM = minim2.loadFile("TheDescent.mp3");
   gameBGM.setGain(volume);
   
+=======
+<<<<<<< Updated upstream
   
+=======
+  minim2 = new Minim(this);
+  gameBGM = minim2.loadFile("TheDescent.mp3");
+  gameBGM.setGain(volume);
+
+>>>>>>> 6739e12f1acfe2e7262194e386d6812f894b3dbb:spaceMaze.pde
+  
+  // setup camera // camera(eye, center, n)
+  camera = new Camera(this, 30, 6*CAMERA_Y, 30); //30, -5, 30 //sub camera
+>>>>>>> Stashed changes
   // coordinate for the camera position
   // coordinate for the center of interest
   // component of the "up" direction vector
@@ -245,7 +273,13 @@ void draw() {
   
   // gamePage
   else if (page == 1) {
+<<<<<<< HEAD:spaceMaze4.pde
     //bgm.pause();
+=======
+    cameraflag=1;
+    bgm.pause();
+    //gameBGM.loop();
+>>>>>>> 6739e12f1acfe2e7262194e386d6812f894b3dbb:spaceMaze.pde
     gamePage();
   }
   

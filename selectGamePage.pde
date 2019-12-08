@@ -23,7 +23,11 @@ void selectGamePage() {
       exit();
     }
     else if (nextStageIcon.click) {
+<<<<<<< HEAD
     gameBGM.loop();
+=======
+      gameBGM.loop();
+>>>>>>> 6739e12f1acfe2e7262194e386d6812f894b3dbb
       page = 6;
     }
   }
