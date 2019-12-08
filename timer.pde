@@ -31,7 +31,7 @@ class timer {
     textAlign(CENTER, CENTER);
     textSize(10);
     fill(255,0,0);
-    text(showMin + ":" + ((showSec < 10)?"0":"") + showSec, 15,15);
+    text("♥ " + count + "/5\n" + showMin + ":" + ((showSec < 10)?"0":"") + showSec, 15,15);
   }
 
 }

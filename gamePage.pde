@@ -2,9 +2,29 @@
 float angle = 0;
 float scale=1;
 
+int abc=1;
+boolean abc_flag=true;
+
 void gamePage() {
   
+  
+  if(abc_flag){
+    abc++;
+    if(abc==30){
+      abc_flag=false;
+    }
+  }
+  else if(!abc_flag){
+    abc--;
+    if(abc==1){
+      abc_flag=true;
+    }
+  }
+  
+  println(abc);
+  
   cameraflag=0;
+  
   
     // star
   camera2.feed();
@@ -20,6 +40,7 @@ void gamePage() {
   //noStroke();
   //fill(255,0,0);
   //rect(-width/2, -height/2, width, 100);
+
   
 
   /* Navigate camera */
@@ -39,15 +60,15 @@ void gamePage() {
     }
     
     /*
-    if(isItem(camera)){ //eat item = count--;
+    if(isItem(camera)){ //eat item = count++;
       drawItemCheck();
-      count--; //initialized count = 5
+      count++; //initialized count = 5
     }*/
     
     //This code will be completed after ending ItemCheck function.
     //count == 0 & approach to 'S'
     //In this case, 'S' is the end point.
-    if(count==0 && isEnd(camera)){ 
+    if(count==5 && isEnd(camera)){ 
       selectflag=true;
       
       camX = position[0];
@@ -115,6 +136,7 @@ void gamePage() {
   pushMatrix();    timer4.draw();  popMatrix();
   pushMatrix();    timer5.draw();  popMatrix();
   pushMatrix();    timer6.draw();  popMatrix();  
+
   
   
   pushMatrix();
@@ -132,7 +154,7 @@ void gamePage() {
   println("mouse",mouseX,mouseY,width, height);
   popMatrix();
   
-  
+
 }
 
 // draw wall
@@ -160,7 +182,6 @@ void drawWall() {
  */
 void drawGround() {
   beginShape(QUADS); //rectangle
-  //texture(WALL_TEXTURE);
   stroke(255); //line color = white
   strokeWeight(5); // line size = 10
   
@@ -175,7 +196,7 @@ void drawGround() {
 
 
 void drawEndPoint() {
-  beginShape(QUADS);
+  beginShape(QUADS);  
   texture(GROUND_TEXTURE);
   vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
   vertex(CASE_SIZE, 0, 0, 1, 0);
@@ -188,18 +209,32 @@ void drawEndPoint() {
 
 
 void drawEnemyPoint() {
-  println(count_enemy);
-  if(count_enemy <= 0){
-    beginShape(QUADS); //rectangle
-    stroke(255); //line color = white
-    strokeWeight(5); // line size = 10
-    vertex(0, 0, 0, 0, 0);
-    vertex(CASE_SIZE, 0, 0, 1, 0);
-    vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
-    vertex(0, 0, CASE_SIZE, 0, 1);
-    endShape();
-    noFill();
-   }else{
+ 
+  if(abc>=15){
+    if(abc>15 && abc<25 && !abc_flag){
+      beginShape(QUADS);  
+      texture(GROUND_TEXTURE);
+      vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
+      vertex(CASE_SIZE, 0, 0, 1, 0);
+      vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
+      vertex(0, 0, CASE_SIZE, 0, 1);
+      endShape();
+      noFill();
+    }
+    else{
+      beginShape(QUADS); //rectangle
+      stroke(255); //line color = white
+      strokeWeight(5); // line size = 10
+      vertex(0, 0, 0, 0, 0);
+      vertex(CASE_SIZE, 0, 0, 1, 0);
+      vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
+      vertex(0, 0, CASE_SIZE, 0, 1);
+      endShape();
+      noFill();
+     }
+   }
+   
+   else if(abc<15){
       final Box box = new Box(this, CASE_SIZE);
       box.drawMode(S3D.TEXTURE);
       box.setTexture(WALL_TEXTURE);
@@ -227,10 +262,6 @@ void drawEnemyPoint() {
     noFill();
     */
    }
-}
-
-void mouseClicked(){
-  count_enemy--;
 }
 
 /**
@@ -316,10 +347,10 @@ void drawEnemy(){
 
 
 void drawItem(){
-  if(isItem(camera) && flag1_1 && mousePressed){ //eat item = count--;
+  if(isItem(camera) && flag1_1 && mousePressed){ //eat item = count++;
       drawItemCheck();
       a=a/2;
-      count--; //initialized count = 5
+      count++; //initialized count = 5
       flag1_1 =false;
       println(flag1_1);
     }
@@ -355,10 +386,10 @@ void drawItem(){
 
 void drawItem2(){
 
-    if(isItem2(camera) && flag1_2 && mousePressed){ //eat item = count--;
+    if(isItem2(camera) && flag1_2 && mousePressed){ //eat item = count++;
       drawItemCheck();
       b=b/2;
-      count--; //initialized count = 5
+      count++; //initialized count = 5
       flag1_2 = false;
     }
     
@@ -391,10 +422,10 @@ void drawItem2(){
 
 void drawItem3(){
 
-    if(isItem3(camera) && flag1_3 && mousePressed){ //eat item = count--;
+    if(isItem3(camera) && flag1_3 && mousePressed){ //eat item = count++;
       drawItemCheck();
       c=c/2;
-      count--; //initialized count = 5
+      count++; //initialized count = 5
       flag1_3 = false;
     }
     
@@ -426,10 +457,10 @@ void drawItem3(){
 }
 void drawItem4(){
 
-    if(isItem4(camera) && flag1_4 && mousePressed){ //eat item = count--;
+    if(isItem4(camera) && flag1_4 && mousePressed){ //eat item = count++;
       drawItemCheck();
       d=d/2;
-      count--; //initialized count = 5
+      count++; //initialized count = 5
       flag1_4 = false;
     }
     
@@ -461,10 +492,10 @@ void drawItem4(){
 }
 void drawItem5(){
 
-    if(isItem5(camera) && flag1_5 && mousePressed){ //eat item = count--;
+    if(isItem5(camera) && flag1_5 && mousePressed){ //eat item = count++;
       drawItemCheck();
       e=e/2;
-      count--; //initialized count = 5
+      count++; //initialized count = 5
       flag1_5 = false;
     }
     
@@ -559,7 +590,7 @@ void onStepRight(final Camera camera) {
 boolean isAllowedCase(final Camera camera) { //if blank, 'S', 'F', '@', 'A' allowed to go!
   final char caseContent = caseContent(camera);
   //if user does not eat the item, end gate does not open
-  if(count==0){
+  if(count==5){
       return caseContent == 'G'
              || caseContent == 'S'
              || caseContent == 'A'
@@ -570,7 +601,9 @@ boolean isAllowedCase(final Camera camera) { //if blank, 'S', 'F', '@', 'A' allo
              || caseContent == '%'; //'%' is enemy
   }
   else{
-    if(count_enemy<0){
+
+    if(abc>15){
+
       return caseContent == 'G'
              || caseContent == 'S'
              || caseContent == 'A'

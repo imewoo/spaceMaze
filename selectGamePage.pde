@@ -1,5 +1,5 @@
 // page = 5
-void selectGamePage() { 
+void selectGamePage() {
    background(0);
 
   // title
@@ -23,7 +23,9 @@ void selectGamePage() {
       exit();
     }
     else if (nextStageIcon.click) {
-      gameBGM.loop();
+
+    gameBGM.loop();
+
       page = 6;
     }
   }

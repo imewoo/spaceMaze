@@ -4,13 +4,14 @@ void keyPressed() {
   if (key == 'q' || key == 'Q') {
     page = 0; //mainPage
     bgm.loop();
+    gameBGM.pause();
   }
 }
 
 // TODO: remake it
 //6.0 -> 1 circle moved.
 void mouseMoved() {
-  
+
   if(cameraflag==0){
     //if (height/2 < mouseY){
     //  camera.look(radians(mouseX - pmouseX) / 6.0, 0);
