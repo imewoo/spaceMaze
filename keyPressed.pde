@@ -5,6 +5,22 @@ void keyPressed() {
     page = 0; //mainPage
     bgm.loop();
     gameBGM.pause();
+<<<<<<< Updated upstream
+=======
+    
+    
+    println("q -> out !!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    if(mapflag==1){
+      mapflag=2;
+    }
+    else if(mapflag==2){
+      mapflag=3;
+    }
+    else if(mapflag==3){
+      mapflag=1;
+    }
+    println("pressed q =" +mapflag);
+>>>>>>> Stashed changes
   }
 }
 

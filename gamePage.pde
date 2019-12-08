@@ -6,8 +6,9 @@ int abc=1;
 boolean abc_flag=true;
 
 void gamePage() {
-  
-  
+ 
+   x++;
+ 
   if(abc_flag){
     abc++;
     if(abc==30){
@@ -21,7 +22,7 @@ void gamePage() {
     }
   }
   
-  println(abc);
+  //println(abc);
   
   cameraflag=0;
   
@@ -43,9 +44,16 @@ void gamePage() {
 
   
 
+
+  float[] position = camera.position();
+  
+ 
+    
   /* Navigate camera */
   if (keyPressed && key == CODED) {
-     float[] position = camera.position();
+
+  
+    
     
     switch (keyCode) {
       case UP:        onStepForward(camera);        break;
@@ -89,7 +97,7 @@ void gamePage() {
   
   
   
-    
+  if(mapflag==1){
   /* Draw map */
     for (int row = 0; row < map.length; row++) {
       pushMatrix();
@@ -119,8 +127,72 @@ void gamePage() {
       
       popMatrix();
     }
-    
-    
+   }
+   
+   else if(mapflag==2){
+     /* Draw map */
+    for (int row = 0; row < map2.length; row++) {
+      pushMatrix();
+      translate(0, 0, row * CASE_SIZE);
+      
+      for (int col = 0; col < map2[row].length; col++) {
+        pushMatrix();
+        translate(col * CASE_SIZE, 0, 0);
+        
+        switch (map2[row][col]) {
+          case '#': drawWall(); break; //wall 
+          case 'A': drawItem(); break; //item 1
+          case 'B': drawItem2(); break;  //item 2
+          case 'C': drawItem3(); break;  //item 3
+          case 'D': drawItem4(); break;  //item 4
+          case 'E': drawItem5(); break;  //item 5
+          case '%': drawEnemy();  break; //enemy
+          case 'S': drawEndPoint(); break; //end point
+          case 'G': drawGround(); break; //ground
+          
+          case '@': drawEnemyPoint(); break;
+          default: break;
+        }
+  
+        popMatrix();
+      }
+      
+      popMatrix();
+    }
+   }
+   
+    else if(mapflag==3){
+     /* Draw map */
+    for (int row = 0; row < map3.length; row++) {
+      pushMatrix();
+      translate(0, 0, row * CASE_SIZE);
+      
+      for (int col = 0; col < map3[row].length; col++) {
+        pushMatrix();
+        translate(col * CASE_SIZE, 0, 0);
+        
+        switch (map3[row][col]) {
+          case '#': drawWall(); break; //wall 
+          case 'A': drawItem(); break; //item 1
+          case 'B': drawItem2(); break;  //item 2
+          case 'C': drawItem3(); break;  //item 3
+          case 'D': drawItem4(); break;  //item 4
+          case 'E': drawItem5(); break;  //item 5
+          case '%': drawEnemy();  break; //enemy
+          case 'S': drawEndPoint(); break; //end point
+          case 'G': drawGround(); break; //ground
+          
+          case '@': drawEnemyPoint(); break;
+          default: break;
+        }
+  
+        popMatrix();
+      }
+      
+      popMatrix();
+    }
+   }
+   
   // draw timerBox
   pushMatrix();    timerBox1.draw();  popMatrix();
   pushMatrix();    timerBox2.draw();  popMatrix();
@@ -251,16 +323,7 @@ void drawEnemyPoint() {
       popMatrix();
     
       noFill();
-     /*
-     beginShape(QUADS);
-    texture(GROUND_TEXTURE);
-    vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
-    vertex(CASE_SIZE, 0, 0, 1, 0);
-    vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
-    vertex(0, 0, CASE_SIZE, 0, 1);
-    endShape();
-    noFill();
-    */
+    
    }
 }
 
@@ -276,43 +339,11 @@ void drawSphere() {
 
 
 
-/**********This is big enemy moving around the map*****************/
-/*
-void drawEnemy(){
-  final Ellipsoid enemy = new Ellipsoid(this, 20, 30);
-  enemy.setTexture(ENEMY_TEXTURE);
-  enemy.drawMode(Shape3D.TEXTURE);
-  enemy.setRadius(CASE_SIZE);
-
-  pushMatrix();
-  
-  translate(4*CASE_SIZE / 2, -CASE_SIZE / 3, 3*CASE_SIZE / 2);
-  rotateY(angle/8);
-  
-  translate(CASE_SIZE, -CASE_SIZE / 2, CASE_SIZE);
-  enemy.draw();
-  
-   //for game optimization -ing
-
-  if(angle<50){
-    angle++;
-  }else{
-    angle=0;
-  }
-  
-  angle++;
-  popMatrix();
-  
-  noFill();
-}
-*/
-
-
 void drawEnemy(){
   int enemySize=1;
   if(isEnemy(camera)){
       enemySize*=0.5;
-      println("end");
+      //println("end");
       
     }
     
@@ -360,7 +391,7 @@ void drawItem(){
       item.setTexture(ITEM_TEXTURE);
       item.drawMode(Shape3D.TEXTURE);
       item.setRadius(a*CASE_SIZE / 4);
-    
+      
       
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
@@ -400,8 +431,9 @@ void drawItem2(){
       item2.drawMode(Shape3D.TEXTURE);
       item2.setRadius(b*CASE_SIZE / 4);
     
+      float y=cos(x+0.1);
       pushMatrix();
-      translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
+      translate((y*CASE_SIZE / 6)+5, -CASE_SIZE / 2, (y*CASE_SIZE / 6)+5); //center of block
       rotateY(angle);
       item2.draw();
       
@@ -435,9 +467,13 @@ void drawItem3(){
       item3.setTexture(ITEM_TEXTURE);
       item3.drawMode(Shape3D.TEXTURE);
       item3.setRadius(c*CASE_SIZE / 4);
-    
+      
+      float y=cos(x+0.1);
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
+      scale(cos(y)/2);
+      println(cos(y));
+      
       rotateY(angle);
       item3.draw();
       
