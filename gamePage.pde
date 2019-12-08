@@ -1,10 +1,29 @@
 // page = 1
 float angle = 0;
 float scale=1;
+int abc=1;
+boolean abc_flag=true;
 
 void gamePage() {
   
+  
+  if(abc_flag){
+    abc++;
+    if(abc==30){
+      abc_flag=false;
+    }
+  }
+  else if(!abc_flag){
+    abc--;
+    if(abc==1){
+      abc_flag=true;
+    }
+  }
+  
+  println(abc);
+  
   cameraflag=0;
+  
   
     // star
   camera2.feed();
@@ -88,6 +107,8 @@ void gamePage() {
           case '%': drawEnemy();  break; //enemy
           case 'S': drawEndPoint(); break; //end point
           case 'G': drawGround(); break; //ground
+          
+          case '@': drawEnemyPoint(); break;
           default: break;
         }
   
@@ -140,9 +161,8 @@ void drawWall() {
  */
 void drawGround() {
   beginShape(QUADS); //rectangle
-  //texture(WALL_TEXTURE);
   stroke(255); //line color = white
-  strokeWeight(10); // line size = 10
+  strokeWeight(5); // line size = 10
   
   vertex(0, 0, 0, 0, 0);
   vertex(CASE_SIZE, 0, 0, 1, 0);
@@ -155,7 +175,7 @@ void drawGround() {
 
 
 void drawEndPoint() {
-  beginShape(QUADS);
+  beginShape(QUADS);  
   texture(GROUND_TEXTURE);
   vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
   vertex(CASE_SIZE, 0, 0, 1, 0);
@@ -163,6 +183,59 @@ void drawEndPoint() {
   vertex(0, 0, CASE_SIZE, 0, 1);
   endShape();
   noFill();
+}
+
+
+
+void drawEnemyPoint() {
+  
+  if(abc>=15){
+    if(abc>15 && abc<25 && !abc_flag){
+      beginShape(QUADS);  
+      texture(GROUND_TEXTURE);
+      vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
+      vertex(CASE_SIZE, 0, 0, 1, 0);
+      vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
+      vertex(0, 0, CASE_SIZE, 0, 1);
+      endShape();
+      noFill();
+    }
+    else{
+      beginShape(QUADS); //rectangle
+      stroke(255); //line color = white
+      strokeWeight(5); // line size = 10
+      vertex(0, 0, 0, 0, 0);
+      vertex(CASE_SIZE, 0, 0, 1, 0);
+      vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
+      vertex(0, 0, CASE_SIZE, 0, 1);
+      endShape();
+      noFill();
+     }
+   }
+   
+   else if(abc<15){
+      final Box box = new Box(this, CASE_SIZE);
+      box.drawMode(S3D.TEXTURE);
+      box.setTexture(WALL_TEXTURE);
+      
+      pushMatrix();
+      translate(CASE_SIZE/2, -CASE_SIZE/2, CASE_SIZE/2); // 20, -5, 5
+      noStroke();
+      box.draw();
+      popMatrix();
+    
+      noFill();
+     /*
+     beginShape(QUADS);
+    texture(GROUND_TEXTURE);
+    vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
+    vertex(CASE_SIZE, 0, 0, 1, 0);
+    vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
+    vertex(0, 0, CASE_SIZE, 0, 1);
+    endShape();
+    noFill();
+    */
+   }
 }
 
 /**
@@ -211,7 +284,7 @@ void drawEnemy(){
 
 void drawEnemy(){
   int enemySize=1;
-  if(isEnemy(camera)){ //eat item = count--;
+  if(isEnemy(camera)){
       enemySize*=0.5;
       println("end");
       
@@ -265,8 +338,8 @@ void drawItem(){
       
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
-      rotateY(angle);
-      translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
+      rotateY(angle * 4);
+      translate(CASE_SIZE / 12, 0, CASE_SIZE / 12); //center of block
       
     boolean flag2=true;
     item.draw();
@@ -492,25 +565,35 @@ boolean isAllowedCase(final Camera camera) { //if blank, 'S', 'F', '@', 'A' allo
   final char caseContent = caseContent(camera);
   //if user does not eat the item, end gate does not open
   if(count==0){
-  return caseContent == 'G'
-         || caseContent == 'S'
-         || caseContent == 'F'  
-         || caseContent == 'A'
-         || caseContent == 'B'
-         || caseContent == 'C'
-         || caseContent == 'D'
-         || caseContent == 'E'
-         || caseContent == '%'; //'%' is enemy
+      return caseContent == 'G'
+             || caseContent == 'S'
+             || caseContent == 'A'
+             || caseContent == 'B'
+             || caseContent == 'C'
+             || caseContent == 'D'
+             || caseContent == 'E'
+             || caseContent == '%'; //'%' is enemy
   }
   else{
-  return caseContent == 'G'
-         || caseContent == 'F'  
-         || caseContent == 'A'
-         || caseContent == 'B'
-         || caseContent == 'C'
-         || caseContent == 'D'
-         || caseContent == 'E'
-         || caseContent == '%'; //'%' is enemy
+    if(abc>15){
+      return caseContent == 'G'
+             || caseContent == 'S'
+             || caseContent == 'A'
+             || caseContent == 'B'
+             || caseContent == 'C'
+             || caseContent == 'D'
+             || caseContent == 'E'
+             || caseContent == '%'
+             || caseContent == '@'; //'%' is enemy
+    }else{
+      return caseContent == 'G'  
+             || caseContent == 'A'
+             || caseContent == 'B'
+             || caseContent == 'C'
+             || caseContent == 'D'
+             || caseContent == 'E'
+             || caseContent == '%'; //'%' is enemy
+    }
   }
 }
 
@@ -539,6 +622,11 @@ boolean isItem5(final Camera camera){ //when camera catch the item.
 boolean isEnemy(final Camera camera){ //when camera catch the item.
   final char caseContent = caseContent(camera);
   return caseContent == '%';
+}
+
+boolean isEnemy_Ground(final Camera camera){ //when camera catch the item.
+  final char caseContent = caseContent(camera);
+  return caseContent == '@';
 }
 
 boolean isEnd(final Camera camera){ //when camera approach to end point(S).
