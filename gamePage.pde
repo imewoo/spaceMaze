@@ -270,8 +270,8 @@ void drawEnemyPoint() {
       beginShape(QUADS);  
       stroke(255); //line color = white
       strokeWeight(5); // line size = 10
-      fill(255,255,0);
-      //texture(GROUND_TEXTURE);
+      //fill(255,204,0);
+      texture(spiderGround);
       vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
       vertex(CASE_SIZE, 0, 0, 1, 0);
       vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
@@ -296,7 +296,8 @@ void drawEnemyPoint() {
       beginShape(QUADS); //rectangle
       stroke(255); //line color = white
       strokeWeight(5); // line size = 10
-      fill(255,0,0);
+      //fill(237,28,36);
+      texture(spiderGround);
       vertex(0, 0, 0, 0, 0);
       vertex(CASE_SIZE, 0, 0, 1, 0);
       vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
@@ -631,10 +632,12 @@ void onStepRight(final Camera camera) {
  *
  * @return true - camera is in allowed map case, false - not.
  */
+
 boolean isAllowedCase(final Camera camera) { //if blank, 'S', 'F', '@', 'A' allowed to go!
   final char caseContent = caseContent(camera);
   //if user does not eat the item, end gate does not open
   if(count==5){
+      if(abc>15){
       return caseContent == 'G'
              || caseContent == 'S'
              || caseContent == 'A'
@@ -642,7 +645,16 @@ boolean isAllowedCase(final Camera camera) { //if blank, 'S', 'F', '@', 'A' allo
              || caseContent == 'C'
              || caseContent == 'D'
              || caseContent == 'E'
-             || caseContent == '%'; //'%' is enemy
+             || caseContent == '@';
+    }else{
+      return caseContent == 'G'
+             || caseContent == 'S'
+             || caseContent == 'A'
+             || caseContent == 'B'
+             || caseContent == 'C'
+             || caseContent == 'D'
+             || caseContent == 'E';
+     }
   }
   else{
 
@@ -655,19 +667,18 @@ boolean isAllowedCase(final Camera camera) { //if blank, 'S', 'F', '@', 'A' allo
              || caseContent == 'C'
              || caseContent == 'D'
              || caseContent == 'E'
-             || caseContent == '%'
-             || caseContent == '@'; //'%' is enemy
+             || caseContent == '@';
     }else{
       return caseContent == 'G'  
              || caseContent == 'A'
              || caseContent == 'B'
              || caseContent == 'C'
              || caseContent == 'D'
-             || caseContent == 'E'
-             || caseContent == '%'; //'%' is enemy
+             || caseContent == 'E';
     }
   }
 }
+
 
 boolean isItem(final Camera camera){ //when camera catch the item.
   final char caseContent = caseContent(camera);

@@ -3,7 +3,7 @@ import ddf.minim.*;    //audio
 import damkjer.ocd.*;  //camera
 import shapes3d.*;     //3d
 
-PShape Robot, Heart, Spider;
+PShape Spider;
 
 // audio
 Minim minim;
@@ -27,7 +27,7 @@ float speed; //star speed
 // image
 PImage titleImg, astronautImg, soundSettingImg, timeSettingImg;
 PImage moveBtnImg, qBtnImg, mouseMoveImg, mouseClickImg;
-PImage fireworkImg;
+PImage fireworkImg, spiderGround;
 
 /* Textures */
 PImage WALL_TEXTURE;
@@ -125,8 +125,7 @@ int mapflag=1;
 
 void setup() {  
   fullScreen(P3D);
-  
-  Heart = loadShape("12190_Heart_v1_L3.obj");
+
   Spider = loadShape("Trophy.obj");
   // Star
   for (int i = 0; i < stars.length; i++) {
@@ -142,7 +141,7 @@ void setup() {
   qBtnImg = loadImage("qButton.png");
   mouseMoveImg = loadImage("mouseMove.png");
   mouseClickImg = loadImage("mouseLeftClick.png");
-
+  spiderGround = loadImage("spiderGround.png");
   fireworkImg = loadImage("firework.png");
   
   // load Music
@@ -219,11 +218,10 @@ void setup() {
  
  /* Load textures */
   WALL_TEXTURE = loadImage("wall.png");
-  ENEMY_TEXTURE = loadImage("wall-texture.jpg");
   ITEM_TEXTURE = loadImage("water-texture.jpg");
   GROUND_TEXTURE = loadImage("portal.png");
-  WATER_TEXTURE = loadImage("water-texture.jpg");
-  TREE_TEXTURE = loadImage("tree-texture.jpg");
+  //WATER_TEXTURE = loadImage("water-texture.jpg");
+  //TREE_TEXTURE = loadImage("tree-texture.jpg");
   textureMode(NORMAL);
 
    // Button

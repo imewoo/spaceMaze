@@ -50,7 +50,7 @@ void mouseMoved() {
     //  camera.look(radians(mouseX - pmouseX) / 3, 0);
     //}
     //else{
-    camera.look(radians(mouseX - pmouseX) / 3, radians(mouseY - pmouseY) / 7);
+    camera.look(radians(mouseX - pmouseX) / 3, radians(mouseY - pmouseY) / 6);
     //}
   }
   else if(cameraflag==1){
