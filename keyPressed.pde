@@ -19,13 +19,13 @@ void keyPressed() {
     flag1_5 = true;
     
   if(time_mode == 0){
-     timer = 18000;
-  }
-   else if(time_mode == 1){
      timer = 10800;
   }
-   else if(time_mode == 2){
+   else if(time_mode == 1){
      timer = 3600;
+  }
+   else if(time_mode == 2){
+     timer = 1800;
   }
     camera.jump(25,CAMERA_Y*6,65);
 

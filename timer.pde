@@ -23,13 +23,13 @@ class timer {
       gameBGM.pause();
       bgm.loop();
       if(time_mode == 0){ //easy
-         timer = 18000;
-      }
-      else if(time_mode == 1){ //normal
          timer = 10800;
       }
-      else if(time_mode == 2){ //hard
+      else if(time_mode == 1){ //normal
          timer = 3600;
+      }
+      else if(time_mode == 2){ //hard
+         timer = 1800;
       }
     }
     // draw timer

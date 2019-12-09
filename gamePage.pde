@@ -355,7 +355,7 @@ void drawItem(){
       
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
-      rotateY(angle*4);
+      rotateY(timer*4);
       translate(2,3,0);
       translate(CASE_SIZE / 12, 0, CASE_SIZE / 12); //center of block
        item.draw();
@@ -363,13 +363,13 @@ void drawItem(){
    
       
       
-      //for game optimization
-      if(angle < 7){
-        angle ++;
-      }else{
-        angle=0;
-      }
-      angle++;
+      ////for game optimization
+      //if(angle < 7){
+      //  angle ++;
+      //}else{
+      //  angle=0;
+      //}
+      //angle++;
       popMatrix();
       noFill();
     }
@@ -404,20 +404,20 @@ void drawItem2(){
       
       pushMatrix();
       translate((y*CASE_SIZE / 6)+5, -CASE_SIZE / 2, (y*CASE_SIZE / 6)+5); //center of block
-      rotateY(angle);
+      rotateY(timer);
       item2.draw();
       //scale(b*0.2);
       rotateX(PI/2);
       //shape(Heart,0,0);
       
-      //for game optimization
-      if(angle < 6){
-        angle++;
-      }else{
-        angle=0;
-      }
+      ////for game optimization
+      //if(angle < 6){
+      //  angle++;
+      //}else{
+      //  angle=0;
+      //}
       
-      angle++;
+      //angle++;
     
       popMatrix();
     
@@ -456,18 +456,18 @@ void drawItem3(){
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
       scale(cos(y)/2);
       rotateX(PI/2);
-      rotateY(angle);
+      rotateY(timer);
       item3.draw();
       //scale(0.2*c);
       //shape(Heart, 0, 0);
       //for game optimization
-      if(angle < 6){
-        angle++;
-      }else{
-        angle=0;
-      }
+      //if(angle < 6){
+      //  angle++;
+      //}else{
+      //  angle=0;
+      //}
       
-      angle++;
+      //angle++;
     
       popMatrix();
     
@@ -502,19 +502,19 @@ void drawItem4(){
       
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
-      rotateY(angle);
+      rotateY(timer);
       item4.draw();
       rotateX(PI/2);
       //scale(0.2*d);
       //shape(Heart,0,0);
       //for game optimization
-      if(angle < 6){
-        angle++;
-      }else{
-        angle=0;
-      }
+      //if(angle < 6){
+      //  angle++;
+      //}else{
+      //  angle=0;
+      //}
       
-      angle++;
+      //angle++;
     
       popMatrix();
     
@@ -549,20 +549,20 @@ void drawItem5(){
       
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
-      rotateY(angle);
+      rotateY(timer);
       rotateX(PI/3);
       item5.draw();
       
       //scale(0.2*e);
       //shape(Heart,0,0);
       //for game optimization
-      if(angle < 6){
-        angle++;
-      }else{
-        angle=0;
-      }
+      //if(angle < 6){
+      //  angle++;
+      //}else{
+      //  angle=0;
+      //}
       
-      angle++;
+      //angle++;
     
       popMatrix();
     

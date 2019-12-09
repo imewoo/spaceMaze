@@ -13,15 +13,15 @@ void selectGamePage() {
   image(fireworkImg, width/2-380, height/2-300, 700, 200);
 
   
-   int current_timer = 10800;
+   int current_timer = 3600;
   if(time_mode == 0){ //easy
-     current_timer = 18000;
-  }
-  else if(time_mode == 1){ //normal
      current_timer = 10800;
   }
-  else if(time_mode == 2){ //hard
+  else if(time_mode == 1){ //normal
      current_timer = 3600;
+  }
+  else if(time_mode == 2){ //hard
+     current_timer = 1800;
   }
   int showMin = floor((current_timer-timer)/3600);
   int showSec = floor((current_timer-timer)/60)%60;
@@ -58,16 +58,14 @@ void selectGamePage() {
     else if (nextStageIcon.click) {
       gameBGM.loop();
       if(time_mode == 0){
-         timer = 18000;  
+         timer = 10800;  
       }
        else if(time_mode == 1){
-         timer = 10800;
-      }
-       else if(time_mode == 2){
          timer = 3600;
       }
-      
-      
+       else if(time_mode == 2){
+         timer = 1800;
+      }
       
       if(mapflag==1){
         mapflag=2;
@@ -80,7 +78,28 @@ void selectGamePage() {
       }
       page = 1;
     }
+    
+    
       else if(homeBtn.click) {
+              if(time_mode == 0){
+         timer = 10800;  
+      }
+       else if(time_mode == 1){
+         timer = 3600;
+      }
+       else if(time_mode == 2){
+         timer = 1800;
+      }
+      
+      if(mapflag==1){
+        mapflag=2;
+      }
+      else if(mapflag==2){
+        mapflag=3;
+      }
+      else if(mapflag==3){
+        mapflag=1;
+      }
       page = 0;
     }
   }

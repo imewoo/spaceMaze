@@ -49,7 +49,7 @@ int page = 0; //0 = main page
               //5 = selectGame page
 
 //int timeron = 0;
-//int maxtimer = 3600;
+//int maxtimer = 1800;
 int min = minute();
 int sec = second();
 int mm = min*3600;
@@ -57,7 +57,7 @@ int ss = sec*60;
 int countDown = mm+ss;
 
 int time_mode = 1; //normal
-int timer = 10800;
+int timer = 3600;
 
 int count=0; //initialize count = 5;
 int count2=10;
@@ -157,14 +157,14 @@ void setup() {
   
   //time setting
   if(time_mode == 0){ //easy
-     timer = 18000;
+     timer = 10800;
   }
   else if(time_mode == 1){ //normal
-     timer = 10800;
+     timer = 3600;
      //timer = 300;
   }
   else if(time_mode == 2){ //hard
-     timer = 3600;
+     timer = 1800;
   }
 
   
