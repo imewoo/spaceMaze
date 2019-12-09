@@ -40,6 +40,7 @@ void guidePage() {
     flag300 = false;
     }
     else if (startGameBtn.click && flag301) {
+      gameBGM.loop(); 
       page = 1;
       flag301 = true;
     }

@@ -5,10 +5,30 @@ void keyPressed() {
     page = 0; //mainPage
     bgm.loop();
     gameBGM.pause();
+
     count = 0;
-    timer = 10800;
-    camera.jump(25,CAMERA_Y*6,65);
+    a = 1;
+    b = 1;
+    c = 1;
+    d = 1;
+    e = 1;
+    flag1_1 = true;
+    flag1_2 = true;
+    flag1_3 = true;
+    flag1_4 = true;
+    flag1_5 = true;
     
+  if(time_mode == 0){
+     timer = 18000;
+  }
+   else if(time_mode == 1){
+     timer = 10800;
+  }
+   else if(time_mode == 2){
+     timer = 3600;
+  }
+    camera.jump(25,CAMERA_Y*6,65);
+
     if(mapflag==1){
       mapflag=2;
     }
@@ -18,8 +38,6 @@ void keyPressed() {
     else if(mapflag==3){
       mapflag=1;
     }
-
-
   }
 }
 

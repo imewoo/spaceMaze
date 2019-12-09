@@ -240,12 +240,15 @@ void drawEndPoint() {
   if(count==5){
     beginShape(QUADS);  
     texture(GROUND_TEXTURE);
+    stroke(255); //line color = white
+    strokeWeight(5); // line size = 10
     vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
     vertex(CASE_SIZE, 0, 0, 1, 0);
     vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
     vertex(0, 0, CASE_SIZE, 0, 1);
     endShape();
     noFill();
+    
   }else{
     beginShape(QUADS);  
     vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
@@ -255,6 +258,7 @@ void drawEndPoint() {
     endShape();
     noFill();
   }
+  
 }
 
 void drawEnemyPoint() {
@@ -264,7 +268,7 @@ void drawEnemyPoint() {
       beginShape(QUADS);  
       stroke(255); //line color = white
       strokeWeight(5); // line size = 10
-      fill(0,0,255);
+      fill(255,255,0);
       //texture(GROUND_TEXTURE);
       vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
       vertex(CASE_SIZE, 0, 0, 1, 0);
@@ -290,6 +294,7 @@ void drawEnemyPoint() {
       beginShape(QUADS); //rectangle
       stroke(255); //line color = white
       strokeWeight(5); // line size = 10
+      fill(255,0,0);
       vertex(0, 0, 0, 0, 0);
       vertex(CASE_SIZE, 0, 0, 1, 0);
       vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
@@ -327,11 +332,9 @@ void drawItem(){
       a=0;
       count++; //initialized count = 5
       flag1_1 =false;
-      println(flag1_1);
     }
-    
-    else{
-      beginShape(QUADS); //rectangle
+  else{
+     beginShape(QUADS); //rectangle
       stroke(255); //line color = white
       strokeWeight(5); // line size = 10
       vertex(0, 0, 0, 0, 0);
@@ -341,28 +344,30 @@ void drawItem(){
       endShape();
       noFill();
 
+ final Ellipsoid item = new Ellipsoid(this, 20, 30);
+      item.setTexture(ITEM_TEXTURE);
+      item.drawMode(Shape3D.TEXTURE);
+      item.setRadius(a*CASE_SIZE / 4);
+      
+      
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
       rotateY(angle*4);
       translate(2,3,0);
       translate(CASE_SIZE / 12, 0, CASE_SIZE / 12); //center of block
-      
+       item.draw();
     boolean flag2=true;
-    //item.draw();
-    scale(a*0.15);
-    rotateX(PI/3);
-    shape(Heart, 0, 0); 
+   
+      
+      
       //for game optimization
       if(angle < 7){
         angle ++;
       }else{
         angle=0;
       }
-      
       angle++;
-     
       popMatrix();
-      
       noFill();
     }
 }
@@ -377,8 +382,6 @@ void drawItem2(){
     }
     
     else{
-
-   
       beginShape(QUADS); //rectangle
       stroke(255); //line color = white
       strokeWeight(5); // line size = 10
@@ -390,13 +393,19 @@ void drawItem2(){
       noFill();
       
       float y=cos(x+0.1);  
+      final Ellipsoid item2 = new Ellipsoid(this, 20, 30);
+      //final Ellipsoid item2 = new Ellipsoid(this, 20, 30);
+      item2.setTexture(ITEM_TEXTURE);
+      item2.drawMode(Shape3D.TEXTURE);
+      item2.setRadius(b*CASE_SIZE / 4);
+      
       pushMatrix();
       translate((y*CASE_SIZE / 6)+5, -CASE_SIZE / 2, (y*CASE_SIZE / 6)+5); //center of block
       rotateY(angle);
-      //item2.draw();
-      scale(b*0.2);
+      item2.draw();
+      //scale(b*0.2);
       rotateX(PI/2);
-      shape(Heart,0,0);
+      //shape(Heart,0,0);
       
       //for game optimization
       if(angle < 6){
@@ -433,16 +442,21 @@ void drawItem3(){
       endShape();
       noFill();
       
+       final Ellipsoid item3 = new Ellipsoid(this, 20, 30);
+      //final Ellipsoid item2 = new Ellipsoid(this, 20, 30);
+      item3.setTexture(ITEM_TEXTURE);
+      item3.drawMode(Shape3D.TEXTURE);
+      item3.setRadius(c*CASE_SIZE / 4);
+      
       float y=cos(x+0.1);
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
       scale(cos(y)/2);
-      println(cos(y));
       rotateX(PI/2);
       rotateY(angle);
-      //item3.draw();
-      scale(0.2*c);
-      shape(Heart, 0, 0);
+      item3.draw();
+      //scale(0.2*c);
+      //shape(Heart, 0, 0);
       //for game optimization
       if(angle < 6){
         angle++;
@@ -477,13 +491,19 @@ void drawItem4(){
       endShape();
       noFill();
       
+      final Ellipsoid item4 = new Ellipsoid(this, 20, 30);
+      //final Ellipsoid item2 = new Ellipsoid(this, 20, 30);
+      item4.setTexture(ITEM_TEXTURE);
+      item4.drawMode(Shape3D.TEXTURE);
+      item4.setRadius(d*CASE_SIZE / 4);
+      
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
       rotateY(angle);
-      //item4.draw();
+      item4.draw();
       rotateX(PI/2);
-      scale(0.2*d);
-      shape(Heart,0,0);
+      //scale(0.2*d);
+      //shape(Heart,0,0);
       //for game optimization
       if(angle < 6){
         angle++;
@@ -518,13 +538,20 @@ void drawItem5(){
       endShape();
       noFill();
       
+      final Ellipsoid item5 = new Ellipsoid(this, 20, 30);
+      //final Ellipsoid item2 = new Ellipsoid(this, 20, 30);
+      item5.setTexture(ITEM_TEXTURE);
+      item5.drawMode(Shape3D.TEXTURE);
+      item5.setRadius(e*CASE_SIZE / 4);
+      
       pushMatrix();
       translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2); //center of block
       rotateY(angle);
       rotateX(PI/3);
-      scale(0.2*e);
-      //item5.draw();
-      shape(Heart,0,0);
+      item5.draw();
+      
+      //scale(0.2*e);
+      //shape(Heart,0,0);
       //for game optimization
       if(angle < 6){
         angle++;
@@ -543,7 +570,8 @@ void drawItem5(){
 
 void drawItemCheck(){
   beginShape(QUADS);
-  texture(GROUND_TEXTURE);
+  //texture(GROUND_TEXTURE);
+    fill(240,70,180);
   vertex(0, 0, 0, 0, 0); //vertex(x, y, z, horizontal, vertical)
   vertex(CASE_SIZE, 0, 0, 1, 0);
   vertex(CASE_SIZE, 0, CASE_SIZE, 1, 1);
@@ -684,8 +712,16 @@ boolean isEnd(final Camera camera){ //when camera approach to end point(S).
  */
 char caseContent(final Camera camera) {
   final int[] caseId= currentCase(camera);
-  return map[caseId[0]][caseId[1]];
-}
+    if(mapflag==1){
+      return map[caseId[0]][caseId[1]];
+    }
+    else if(mapflag==2){
+       return map2[caseId[0]][caseId[1]];
+    }
+    else {
+       return map3[caseId[0]][caseId[1]];
+    }
+  }
 
 /**
  * Returns the case (row & col) in which camera is currently situated.
@@ -696,8 +732,8 @@ char caseContent(final Camera camera) {
  */
 int[] currentCase(final Camera camera) {
   final float[] position = camera.position();
-  
-  return new int[]{
+      return new int[]{
     (int) ( position[2] / CASE_SIZE),
     (int) ( position[0] / CASE_SIZE) };
+
 }
