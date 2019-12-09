@@ -203,14 +203,16 @@ void gamePage() {
 void drawWall() {
   final Box box = new Box(this, CASE_SIZE);
   box.drawMode(S3D.TEXTURE);
-  //box.setTexture(WALL_TEXTURE);
   box.setTexture(WALL_TEXTURE);
   
   pushMatrix();
+  //fill(255);
   translate(CASE_SIZE/2, -CASE_SIZE/2, CASE_SIZE/2); // 20, -5, 5
   //translate(CASE_SIZE / 2, -CASE_SIZE / 2, CASE_SIZE / 2);
   //box(40);
-  noStroke();
+  //noStroke();
+  stroke(0);
+  strokeWeight(10);
   //color(255,0,0);
   //stroke(40);
   box.draw();

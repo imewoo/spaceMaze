@@ -46,11 +46,11 @@ void keyPressed() {
 void mouseMoved() {
 
   if(cameraflag==0){
-    //if (height/2 < mouseY){
-    //  camera.look(radians(mouseX - pmouseX) / 6.0, 0);
+    //if (height/3 < mouseY){
+    //  camera.look(radians(mouseX - pmouseX) / 3, 0);
     //}
     //else{
-    camera.look(radians(mouseX - pmouseX) / 6.0, radians(mouseY - pmouseY) / 6.0);
+    camera.look(radians(mouseX - pmouseX) / 3, radians(mouseY - pmouseY) / 7);
     //}
   }
   else if(cameraflag==1){

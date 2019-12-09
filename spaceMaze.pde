@@ -177,8 +177,8 @@ void setup() {
     camera2 = new Camera(this, width/2,height/2,900  ,width/2,height/2,0    ,0,0,0); //main camera //(eye, center, upVector)
 
   // setup camera // camera(eye, center, n)
-    
-    camera = new Camera(this, cameraX, 6*CAMERA_Y, cameraZ); //25, -5, 30 //game camera
+    camera = new Camera(this, cameraX, 6*CAMERA_Y, cameraZ, cameraX*1.5,6*CAMERA_Y,cameraZ*1.5); //25, -5, 30 //game camera    
+    //camera = new Camera(this, cameraX, 6*CAMERA_Y, cameraZ); //25, -5, 30 //game camera
     
     
  /************** Load map 1-stage from file *************/
